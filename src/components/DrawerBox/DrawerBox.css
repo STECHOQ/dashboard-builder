@@ -1,0 +1,11 @@
+drawer-box .grid-stack { 
+	background: #EDEFF2;
+	min-height: 100vh;
+}
+drawer-box .grid-stack-item-content { 
+	background-color: white; 
+	border-radius: 5px; 
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}

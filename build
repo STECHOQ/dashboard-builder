@@ -1,0 +1,45 @@
+#!/usr/bin/env node
+
+const fs = require('fs');
+const path = require('path');
+const { spawn, execSync } = require('child_process');
+
+const dir = __dirname;
+
+const binDir = path.join(dir, `node_modules/.bin`);
+const viteBin = path.join(binDir, 'vite');
+
+execSync('node utils/listingComponent.js', {
+	cwd: `${dir}`,
+	stdio: 'inherit',
+});
+execSync('node utils/listingPageForRoute.js', {
+	cwd: `${dir}`,
+	stdio: 'inherit',
+});
+//execSync('node ./utils/listingPluginComponent.mjs');
+//execSync('node ./utils/listingPluginHeaders.mjs');
+
+execSync(viteBin + ' build', {
+	cwd: `${dir}`,
+	stdio: 'inherit',
+});
+
+fs.copyFileSync(
+	path.join(dir, '.htaccess'), 
+	path.join(dir, 'dist/.htaccess')
+);
+
+const filePath = path.join(dir, 'dist/index.html');
+const epoch = Math.floor(Date.now() / 1000);
+
+let content = fs.readFileSync(filePath, 'utf8');
+
+// Add cache-busting timestamp to relevant file types
+content = content
+  .replace(/\.js"/g, `.js?${epoch}"`)
+  .replace(/\.css"/g, `.css?${epoch}"`)
+  .replace(/\.json"/g, `.json?${epoch}"`)
+  .replace(/\.ico"/g, `.ico?${epoch}"`);
+
+fs.writeFileSync(filePath, content, 'utf8');
