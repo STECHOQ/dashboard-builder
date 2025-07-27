@@ -23,21 +23,111 @@ class ELEMENT extends HTMLElement {
 
 		self.append(self.createWrapper());
 
-		window.onload = () => {
-			GridStack.renderCB = (el, w) => {
-      			el.innerHTML = w.content;
+		self._iframes = [];
 
-      			if(w.script){
-      				setTimeout(() => {
-      					eval('"use strict";' + w.script);
-      				}, 50);
-      			}
+		window.onload = () => {
+			GridStack.renderCB = async (el, w) => {
+				const iframe = document.createElement('iframe');
+				iframe.style.border = 'none';
+				iframe.style.width = '100%'; // fill width of container
+				iframe.style.height = 'auto';
+				iframe.onload = () => {
+					const doc = iframe.contentDocument || iframe.contentWindow.document;
+					const resize = () => {
+						iframe.style.height = doc.body.scrollHeight + 'px';
+					};
+					resize();
+
+					// Optionally observe future changes
+					new ResizeObserver(resize).observe(doc.body);
+				};
+				iframe.srcdoc = w.htmlContent;
+				self._iframes.push(iframe);
+				el.append(iframe)
     		};
 
 			const items = [
-    			{w: 1, h: 15, content: '<button class="btn" id="btn-test">Click !</button>', script: `document.getElementById('btn-test').addEventListener('click', () => { ui.emit("btn-test") })`}, 
-    			{w: 2, h: 30, content: `<div class="radial-progress" style="--value:70;" aria-valuenow="70" role="progressbar">70%</div>`}, 
-				{x: 5, y: 30, w: 5, h: 15, content: '<input type="text" placeholder="Type here" class="input w-full" />'},
+    			{w: 1, h: 15, htmlContent: `
+    			<html>
+					<head>
+						<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
+						<script src="/vendor/DaisyUI/tailwind-4.js"></script>
+						<style>
+							.btn { background-color: aqua; width: 100% }
+						</style>
+					</head>
+					<body>
+						<button class="btn">Click !</button>
+						<script type="module">
+							import ui from './vendor/global/ui.js';
+
+							const bridge = ui.createIframeBridge(window.parent);
+							document.querySelector('.btn').addEventListener('click', () => {
+								bridge.send('btn-test', { data: 'OK' }, { broadcast: true });
+							});
+						</script>
+					</body>
+				</html>
+    			`
+    			}, 
+    			{w: 2, h: 30, htmlContent: `
+    			<html>
+					<head>
+						<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
+						<script src="/vendor/DaisyUI/tailwind-4.js"></script>
+						<style>
+						</style>
+					</head>
+					<body>
+						<div>
+							<span>Counter: </span>
+							<span id="counter-value"></span>
+						</div>
+						<div>
+							<span>Input: </span>
+							<span id="input-value"></span>
+						</div>
+
+						<script type="module">
+							import ui from './vendor/global/ui.js';
+							const bridge = ui.createIframeBridge(window.parent);
+
+							let counter = 0;
+							bridge.on('btn-test', (data) => {
+								document.querySelector('#counter-value').innerText = counter++;
+							});
+
+							bridge.on('input-test', (data) => {
+								document.querySelector('#input-value').innerText = data.data;
+							});
+						</script>
+					</body>
+				</html>
+    			`
+    			}, 
+				{x: 5, y: 30, w: 5, h: 15, htmlContent: `
+    			<html>
+					<head>
+						<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
+						<script src="/vendor/DaisyUI/tailwind-4.js"></script>
+						<style>
+						</style>
+					</head>
+					<body>
+						<input type="text" placeholder="Type here" class="input w-full" />
+						<script type="module">
+							import ui from './vendor/global/ui.js';
+							const bridge = ui.createIframeBridge(window.parent);
+
+							const input = document.querySelector('input');
+							input.addEventListener('input', ui.debounce(() => {
+								const value = document.querySelector('input').value;
+								bridge.send('input-test', { data: value }, { broadcast: true });
+							}, 500))
+						</script>
+					</body>
+				</html>
+    			`},
 			];
 			self._grid = GridStack.init({
 				float: true,
@@ -48,6 +138,25 @@ class ELEMENT extends HTMLElement {
     			//removable: true,
 			});
 			self._grid.load(items);
+
+			window.addEventListener('message', (event) => {
+				const { type, payload, _broadcasted } = event.data;
+
+				if (_broadcasted && payload) {
+					// Re-broadcast to all iframes (except sender)
+					for (const iframe of self._iframes) {
+						if (iframe.contentWindow !== event.source) {
+							iframe.contentWindow.postMessage({ type, payload, _broadcasted: true }, '*');
+						}
+					}
+
+					// Optionally trigger locally too (parent self-handler)
+					/*window.dispatchEvent(new MessageEvent('message', {
+						data: { type, payload, _broadcasted: true },
+						origin: event.origin
+					}));*/
+				}
+			});
 		}
 
 		self._listeners = {
