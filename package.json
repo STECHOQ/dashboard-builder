@@ -8,6 +8,7 @@
     "preview": "vite preview --host --port 3140"
   },
   "devDependencies": {
+    "monaco-editor": "^0.52.2",
     "vite": "^7.0.4"
   },
   "author": "rusminto https://github.com/rusminto"

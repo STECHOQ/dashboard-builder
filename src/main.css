@@ -2,6 +2,7 @@
 
 /* css components */
 @import url('./components/DrawerBox/DrawerBox.css');
+@import url('./components/EditorBox/EditorBox.css');
 @import url('./components/NavigationBar/NavigationBar.css');
 @import url('./pages/Page404/Page404.css');
 @import url('./pages/PageHome/PageHome.css');

@@ -9,3 +9,7 @@ drawer-box .grid-stack-item-content {
 	align-items: center;
 	justify-content: center;
 }
+
+drawer-box #right-click-menu {
+  min-width: 150px;
+}

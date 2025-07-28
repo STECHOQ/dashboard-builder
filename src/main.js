@@ -2,6 +2,7 @@
 
 /* js components */
 import './components/DrawerBox/DrawerBox.js';
+import './components/EditorBox/EditorBox.js';
 import './components/NavigationBar/NavigationBar.js';
 import './pages/Page404/Page404.js';
 import './pages/PageHome/PageHome.js';
