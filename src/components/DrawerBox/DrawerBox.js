@@ -79,7 +79,13 @@ class ELEMENT extends HTMLElement {
 
 		items.edit.addEventListener('click', () => {
 			self._editorBoxModal.showModal();
-			ui.emit('update-editor', self._selectedItem.children[0].attributes.srcdoc.nodeValue);
+
+			const selectedId = Number(self._selectedItem.id.replace('widget-',''));
+			for(const node of self._grid.engine.nodes){
+				if(node.id == selectedId){
+					ui.emit('update-editor', node.content)
+				}
+			}
 		});
 		return menu;
 	}
@@ -187,6 +193,7 @@ class ELEMENT extends HTMLElement {
 
 		self._iframes = [];
 
+		self._counterId = 0;
 		window.onload = () => {
 			GridStack.renderCB = async (el, w) => {
 				const iframe = document.createElement('iframe');
@@ -208,11 +215,14 @@ class ELEMENT extends HTMLElement {
 				el.append(iframe)
 
 				//el.id = `widget-${self.getRandomString()}_${w.x || 0}_${w.y || 0}`;
-				el.id = `widget-${w.id}`;
+				el.id = `widget-${self._counterId}`;
+				w.id = self._counterId;
+
+				self._counterId++;
     		};
 
 			const items = [
-    			{w: 1, h: 15, id: 0, content: `
+    			{w: 1, h: 15, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -235,7 +245,7 @@ class ELEMENT extends HTMLElement {
 </html>
     			`
     			}, 
-    			{w: 2, h: 30, id: 1, content: `
+    			{w: 2, h: 30, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -270,7 +280,7 @@ class ELEMENT extends HTMLElement {
 </html>
     			`
     			}, 
-				{x: 5, y: 30, w: 5, h: 15, id: 2, content: `
+				{x: 5, y: 30, w: 5, h: 15, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
