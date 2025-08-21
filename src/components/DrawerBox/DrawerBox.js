@@ -400,6 +400,52 @@ class ELEMENT extends HTMLElement {
   				a.click();
 
   				URL.revokeObjectURL(url); // free up memory
+			},
+			'btn-build': async () => {
+
+				const pages = {
+					home: {}
+				}
+
+				const components = [];
+				for(const node of self._grid.engine.nodes){
+					const component = { 
+						content: node.content,
+						x: node.x,
+						y: node.y,
+						h: node.h,
+						w: node.w 
+					}
+					components.push(component);
+				}
+				pages.home = components;
+
+				const response = await fetch('/api/build', {
+					method: 'post',
+					body: JSON.stringify(pages)
+				})
+
+				if(response.ok){
+					const blob = await response.blob();
+  					const url = window.URL.createObjectURL(blob);
+
+  					const a = document.createElement("a");
+  					a.href = url;
+
+					const disposition = response.headers.get("Content-Disposition");
+					let filename = "download.zip";
+					if (disposition && disposition.includes("filename=")) {
+  						filename = disposition.split("filename=")[1].replace(/"/g, "");
+					}
+
+  					a.download = filename;
+  					document.body.appendChild(a);
+  					a.click();
+  					a.remove();
+
+  					// cleanup
+  					window.URL.revokeObjectURL(url);
+  				}
 			}
 		}
 

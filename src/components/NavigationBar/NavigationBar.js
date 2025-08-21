@@ -100,12 +100,21 @@ class ELEMENT extends HTMLElement {
 		btnExport.innerText = 'Export';
 		wrapper.append(btnExport);
 
+		const btnBuild = document.createElement('button');
+		btnBuild.classList.add('btn', 'mr-2');
+		btnBuild.innerText = 'Build';
+		wrapper.append(btnBuild);
+
 		btnImport.addEventListener('click', () => {
 			dialogImport.showModal();
 		})
 
 		btnExport.addEventListener('click', () => {
 			ui.emit('btn-export');
+		})
+
+		btnBuild.addEventListener('click', () => {
+			ui.emit('btn-build');
 		})
 
 		return component;
