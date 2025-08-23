@@ -10,7 +10,7 @@ class ELEMENT extends HTMLElement {
 		const self = this;
 
 		const wrapper = document.createElement('div');
-		wrapper.classList.add('h-screen', 'w-screen', 'overflow-auto');
+		wrapper.classList.add('h-screen', 'overflow-auto');
 
 		const component = document.createElement('div');
 		component.classList.add('grid-stack');
@@ -31,8 +31,6 @@ class ELEMENT extends HTMLElement {
 
 		return item;
 	}
-
-	const 
 
 	createRightClickMenu(){
 		const self = this;
@@ -186,6 +184,7 @@ class ELEMENT extends HTMLElement {
 
 		self.append(self.createWrapper());
 		const rightClickMenu = self.createRightClickMenu()
+		rightClickMenu.classList.add("hidden");
 		self.append(rightClickMenu);
 
 		self._editorBoxModal = self.createEditorModal();

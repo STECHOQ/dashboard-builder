@@ -1,2 +1,15 @@
 .page-home {
 }
+
+page-home drawer-box {
+	display: flex;
+	width: calc(100% - var(--sidebar-width));
+	height: 100vh;
+	overflow-y: scroll;
+	transition: width var(--sidebar-transition);
+	flex-flow: column nowrap;
+}
+
+page-home drawer-box.expand {
+	width: 100%;
+}

@@ -10,14 +10,21 @@ class PageHome extends HTMLElement {
 	createWrapper(){
 		const self = this;
 		const wrapper = document.createElement('div');
-		wrapper.classList.add('h-screen');
+		//wrapper.classList.add('h-screen');
 
 		const navbar = document.createElement('navigation-bar');
 		wrapper.append(navbar);
 
-		const drawerBox = document.createElement('drawer-box');
-		wrapper.append(drawerBox);
+		const wrapperContent = document.createElement('div');
+		wrapperContent.classList.add('h-screen', 'flex');
 
+		const sideBar = document.createElement('side-bar');
+		wrapperContent.append(sideBar);
+
+		const drawerBox = document.createElement('drawer-box');
+		wrapperContent.append(drawerBox);
+
+		wrapper.append(wrapperContent);
 		return wrapper;
 	}
 
@@ -50,7 +57,16 @@ class PageHome extends HTMLElement {
 		self._listeners = {
 			'screen-resize': () => {
 
-			}
+			},
+			'sidebar-state': ({ detail }) => {
+				const pageContent = self.querySelector('drawer-box');
+
+				if(!detail.state){
+					pageContent.classList.add('expand');
+				}else{
+					pageContent.classList.remove('expand');
+				}
+			},
 		}
 
 		for(let key in self._listeners){
