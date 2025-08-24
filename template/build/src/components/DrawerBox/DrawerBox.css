@@ -3,11 +3,14 @@ drawer-box .grid-stack {
 	min-height: 100vh;
 }
 drawer-box .grid-stack-item-content { 
-	background-color: white; 
 	border-radius: 5px; 
 	display: flex;
 	align-items: center;
 	justify-content: center;
+}
+
+drawer-box .grid-stack-nested {
+	width: 100%
 }
 
 drawer-box #right-click-menu {

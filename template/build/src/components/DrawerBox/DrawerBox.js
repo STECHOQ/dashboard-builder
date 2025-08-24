@@ -36,6 +36,17 @@ class ELEMENT extends HTMLElement {
 		self._counterId = 0;
 		window.onload = () => {
 			GridStack.renderCB = async (el, w) => {
+
+				if(w.subGridOpts){
+
+					el.id = `widget-${self._counterId}`;
+					w.id = self._counterId;
+
+					self._counterId++;
+
+					return;
+				};
+
 				const iframe = document.createElement('iframe');
 				iframe.style.border = 'none';
 				iframe.style.width = '100%'; // fill width of container
@@ -62,7 +73,6 @@ class ELEMENT extends HTMLElement {
     		};
 
 			self._grid = GridStack.init({
-				float: true,
 				cellHeight: '1vh',
 				cellWidth: '1vw',
 				//staticGrid: true

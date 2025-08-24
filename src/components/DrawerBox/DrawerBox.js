@@ -19,11 +19,11 @@ class ELEMENT extends HTMLElement {
 		return wrapper;
 	}
 
-	createMenuItem(name, url){
+	createMenuItem(className, name, url){
 		const self = this;
 
 		const item = document.createElement('li');
-		item.id = `rightMenuClick-${name}`
+		item.id = `rightMenuClick-${className}`
 		const link = document.createElement('a');
 		link.href = url;
 		link.innerText = name;
@@ -43,16 +43,17 @@ class ELEMENT extends HTMLElement {
 		menu.append(list);
 
 		const items = {
-			create: self.createMenuItem('Create', '#'),
-			edit: self.createMenuItem('Edit', '#'),
-			delete: self.createMenuItem('Delete', '#')
+			createComponent: self.createMenuItem('CreateComponent', 'Create Component', '#'),
+			createGroup: self.createMenuItem('CreateGroup', 'Create Group', '#'),
+			edit: self.createMenuItem('Edit', 'Edit', '#'),
+			delete: self.createMenuItem('Delete', 'Delete', '#')
 		}
 
 		for(const key in items){
 			list.append(items[key]);
 		}
 
-		items.create.addEventListener('click', () => {
+		items.createComponent.addEventListener('click', () => {
 			self._grid.addWidget({
 				content:  `
 <html>
@@ -63,12 +64,19 @@ class ELEMENT extends HTMLElement {
 		</style>
 	</head>
 	<body>
-		<b>New Element</b>
+		<b>New Component</b>
 
 		<script type="module">
 		</script>
 	</body>
-</html>`, w: 1, h: 15});
+</html>`, w: 1, h: 15, locked: 'yes'});
+		});
+
+		items.createGroup.addEventListener('click', () => {
+			self._grid.addWidget({
+				subGridOpts: {children: []},
+				w: 1, h: 15, locked: 'yes'
+			});
 		});
 
 		items.delete.addEventListener('click', () => {
@@ -171,9 +179,34 @@ class ELEMENT extends HTMLElement {
 		if(isWidget){
 			document.querySelector('#rightMenuClick-Edit').classList.remove('hidden');
 			document.querySelector('#rightMenuClick-Delete').classList.remove('hidden');
+			document.querySelector('#rightMenuClick-CreateComponent').classList.add('hidden');
+			document.querySelector('#rightMenuClick-CreateGroup').classList.add('hidden');
 		}else{
 			document.querySelector('#rightMenuClick-Edit').classList.add('hidden');
 			document.querySelector('#rightMenuClick-Delete').classList.add('hidden');
+			document.querySelector('#rightMenuClick-CreateComponent').classList.remove('hidden');
+			document.querySelector('#rightMenuClick-CreateGroup').classList.remove('hidden');
+		}
+	}
+
+	convertIframeContent(nodes){
+		const self = this;
+
+		for(const node of nodes){
+			if(node.content !== undefined){
+				const match = node.content.match(/srcdoc="([^"]*)"/s);
+				let srcdoc = match ? match[1] : "";
+
+				const textarea = document.createElement("textarea");
+				textarea.innerHTML = srcdoc;
+				const htmlString = textarea.value;
+
+				node.content = htmlString;
+			}
+
+			if(node.subGridOpts !== undefined){
+				self.convertIframeContent(node.subGridOpts.children);
+			}
 		}
 	}
 
@@ -195,6 +228,17 @@ class ELEMENT extends HTMLElement {
 		self._counterId = 0;
 		window.onload = () => {
 			GridStack.renderCB = async (el, w) => {
+
+				if(w.subGridOpts){
+
+					el.id = `widget-${self._counterId}`;
+					w.id = self._counterId;
+
+					self._counterId++;
+
+					return;
+				};
+
 				const iframe = document.createElement('iframe');
 				iframe.style.border = 'none';
 				iframe.style.width = '100%'; // fill width of container
@@ -221,7 +265,7 @@ class ELEMENT extends HTMLElement {
     		};
 
 			const items = [
-    			{w: 1, h: 15, content: `
+    			{w: 1, h: 15, locked: 'yes', content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -244,7 +288,7 @@ class ELEMENT extends HTMLElement {
 </html>
     			`
     			}, 
-    			{w: 2, h: 30, content: `
+    			{w: 2, h: 30, locked: 'yes', content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -279,7 +323,7 @@ class ELEMENT extends HTMLElement {
 </html>
     			`
     			}, 
-				{x: 5, y: 30, w: 5, h: 15, content: `
+				{x: 5, y: 30, w: 5, h: 15, locked: 'yes', content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -302,14 +346,37 @@ class ELEMENT extends HTMLElement {
 	</body>
 </html>
     			`},
+    			 {x:5, y:0, w:3, h:15, locked: 'yes', subGridOpts: {children: [{x:0, y:0, h:15, w: 5, locked: 'yes', content: `<html>
+	<head>
+		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
+		<script src="/vendor/DaisyUI/tailwind-4.js"></script>
+		<style>
+		</style>
+	</head>
+	<body>
+		<input type="text" placeholder="Type here" class="input w-full" />
+		<script type="module">
+			import ui from './vendor/global/ui.js';
+			const bridge = ui.createIframeBridge(window.parent);
+
+			const input = document.querySelector('input');
+			input.addEventListener('input', ui.debounce(() => {
+				const value = document.querySelector('input').value;
+				bridge.send('input-test', { data: value }, { broadcast: true });
+			}, 500))
+		</script>
+	</body>
+</html>`}]}},
 			];
 			self._grid = GridStack.init({
 				float: true,
 				cellHeight: '1vh',
 				cellWidth: '1vw',
 				//staticGrid: true
-				//acceptWidgets: true,
+				acceptWidgets: true,
     			//removable: true,
+    			resizable: { handles: 'n,ne,e,se,s,sw,w,nw'},
+    			minRow: 2
 			});
 			self._grid.load(items);
 
@@ -371,23 +438,12 @@ class ELEMENT extends HTMLElement {
 			},
 			'btn-import': ({ detail }) => {
 				self._grid.removeAll();
+				self._iframes = [];
 				self._grid.load(detail.data);
 			},
 			'btn-export': () => {
-				// can't use save() due to it'll store iframe too
-				//const components = self._grid.save();
-
-				const components = [];
-				for(const node of self._grid.engine.nodes){
-					const component = { 
-						content: node.content,
-						x: node.x,
-						y: node.y,
-						h: node.h,
-						w: node.w 
-					}
-					components.push(component);
-				}
+				const components = self._grid.save();
+				self.convertIframeContent(components);
 
 				const blob = new Blob([JSON.stringify(components)], { type: 'application/json' });
   				const url = URL.createObjectURL(blob);
@@ -406,17 +462,9 @@ class ELEMENT extends HTMLElement {
 					home: {}
 				}
 
-				const components = [];
-				for(const node of self._grid.engine.nodes){
-					const component = { 
-						content: node.content,
-						x: node.x,
-						y: node.y,
-						h: node.h,
-						w: node.w 
-					}
-					components.push(component);
-				}
+				const components = self._grid.save();
+				self.convertIframeContent(components);
+
 				pages.home = components;
 
 				const response = await fetch('/api/build', {
