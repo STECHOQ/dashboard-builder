@@ -80,20 +80,40 @@ class ELEMENT extends HTMLElement {
 		});
 
 		items.delete.addEventListener('click', () => {
-			self._grid.removeWidget(self._selectedItem.parentElement);
+
+			const selectedId = Number(self._selectedItem.id.replace('widget-',''));
+			const components = self._grid.save();
+			self.convertIframeContent(components);
+			self.findNode(components, selectedId, true);
+
+			self._grid.removeAll();
+			self._grid.load(components);
+
+			//self._grid.removeWidget(self._selectedItem.parentNode);
 		});
 
 		items.edit.addEventListener('click', () => {
 			self._editorBoxModal.showModal();
 
 			const selectedId = Number(self._selectedItem.id.replace('widget-',''));
-			for(const node of self._grid.engine.nodes){
-				if(node.id == selectedId){
-					ui.emit('update-editor', node.content)
-				}
+
+			const components = self._grid.save();
+			self.convertIframeContent(components);
+			const selectedNode = self.findNode(components, selectedId);
+			if(selectedNode.content){
+				ui.emit('update-editor', selectedNode.content)
+			}else{
+				ui.emit('update-editor', '')
 			}
+
 		});
 		return menu;
+	}
+
+	moveOut(){
+		const self = this;
+
+		
 	}
 
 	createEditorModal(){
@@ -138,16 +158,14 @@ class ELEMENT extends HTMLElement {
 			/* need to improve to only update selected */
 			const editorValue = monaco.editor.getModels()[0].getValue();
 			 
-			const widgets = self._grid.save();
 			const selectedId = Number(self._selectedItem.id.replace('widget-',''));
-			let selectedWidget;
-			for(const widget of widgets){
-				delete widget.content;
-				if(widget.id == selectedId){
-					widget.content = editorValue;
-					selectedWidget = widget;
-				}
+			const components = self._grid.save();
+			self.convertIframeContent(components);
+			const selectedWidget = self.findNode(components, selectedId);
+			if(selectedWidget.content){
+				selectedWidget.content = editorValue;
 			}
+
 			self._selectedItem.innerHTML = '';
 			self._grid.update(self._selectedItem.parentElement, selectedWidget)
 			//self._grid.removeAll();
@@ -208,6 +226,28 @@ class ELEMENT extends HTMLElement {
 				self.convertIframeContent(node.subGridOpts.children);
 			}
 		}
+	}
+
+	findNode(nodes, id, isRemove = false){
+		const self = this;
+
+		for(const nIndex in nodes){
+			const node = nodes[nIndex];
+			if(node.id == id){
+				if(isRemove){
+					nodes.splice(nIndex, 1);
+				}
+
+				return node;
+			}
+
+			if(node.subGridOpts !== undefined && node.subGridOpts?.children?.length){
+				const result = self.findNode(node.subGridOpts.children, id, isRemove)
+				if(result) return result;
+			}
+		}
+
+		return null;
 	}
 
     connectedCallback(){
