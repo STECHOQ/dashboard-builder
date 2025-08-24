@@ -167,9 +167,9 @@ class ELEMENT extends HTMLElement {
 			}
 
 			self._selectedItem.innerHTML = '';
-			self._grid.update(self._selectedItem.parentElement, selectedWidget)
-			//self._grid.removeAll();
-			//self._grid.load(widgets);
+			//self._grid.update(self._selectedItem.parentElement, selectedWidget)
+			self._grid.removeAll();
+			self._grid.load(components);
 
 			dialog.close();
 		})
