@@ -61,6 +61,11 @@ class ELEMENT extends HTMLElement {
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
 		<script src="/vendor/DaisyUI/tailwind-4.js"></script>
 		<style>
+			html, body {
+            	margin: 0;
+            	padding: 0;
+            	background: transparent !important;
+          	}
 		</style>
 	</head>
 	<body>
@@ -75,7 +80,25 @@ class ELEMENT extends HTMLElement {
 		items.createGroup.addEventListener('click', () => {
 			self._grid.addWidget({
 				subGridOpts: {children: []},
-				w: 1, h: 15, locked: 'yes'
+				w: 1, h: 15, locked: 'yes', 
+				content: `
+				<html>
+	<head>
+		<meta name="color-scheme" content="light dark">
+		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
+		<script src="/vendor/DaisyUI/tailwind-4.js"></script>
+		<style>
+			html, body {
+            	margin: 0;
+            	padding: 0;
+            	background: transparent !important;
+            }
+		</style>
+	</head>
+	<body class="flex items-center justify-center h-screen w-screen">
+		<div class="card bg-base-100 w-[98vw] h-[98vh] shadow-sm"></div>
+	</body>
+</html>`
 			});
 		});
 
@@ -87,19 +110,20 @@ class ELEMENT extends HTMLElement {
 			self.findNode(components, selectedId, true);
 
 			self._grid.removeAll();
+			self._iframes = [];
 			self._grid.load(components);
 
 			//self._grid.removeWidget(self._selectedItem.parentNode);
 		});
 
 		items.edit.addEventListener('click', () => {
-			self._editorBoxModal.showModal();
-
 			const selectedId = Number(self._selectedItem.id.replace('widget-',''));
 
 			const components = self._grid.save();
 			self.convertIframeContent(components);
 			const selectedNode = self.findNode(components, selectedId);
+
+			self._editorBoxModal.showModal();
 			if(selectedNode.content){
 				ui.emit('update-editor', selectedNode.content)
 			}else{
@@ -169,6 +193,8 @@ class ELEMENT extends HTMLElement {
 			self._selectedItem.innerHTML = '';
 			//self._grid.update(self._selectedItem.parentElement, selectedWidget)
 			self._grid.removeAll();
+			self._iframes = [];
+
 			self._grid.load(components);
 
 			dialog.close();
@@ -188,9 +214,16 @@ class ELEMENT extends HTMLElement {
 		for(const key in self._selectedItem.classList){
 			const item = self._selectedItem.classList[key];
 
-			if(item == 'grid-stack-item-content'){
-				isWidget = true;
-				break;
+			switch (item) {
+				case 'drag-handler':
+					self._selectedItem = self._selectedItem.parentNode;
+
+				case 'grid-stack-item-content':
+					isWidget = true;
+					break;
+
+				default:
+					break;
 			}
 		}
 
@@ -213,7 +246,7 @@ class ELEMENT extends HTMLElement {
 		for(const node of nodes){
 			if(node.content !== undefined){
 				const match = node.content.match(/srcdoc="([^"]*)"/s);
-				let srcdoc = match ? match[1] : "";
+				let srcdoc = match ? match[1] : node.content;
 
 				const textarea = document.createElement("textarea");
 				textarea.innerHTML = srcdoc;
@@ -250,6 +283,16 @@ class ELEMENT extends HTMLElement {
 		return null;
 	}
 
+	createDragHandler(){
+		const self = this;
+
+		const el = document.createElement('div');
+		el.classList.add('drag-handler');
+		el.classList.add('fa-solid', 'fa-grip');
+
+		return el;
+	}
+
     connectedCallback(){
         const self = this;
 
@@ -269,30 +312,31 @@ class ELEMENT extends HTMLElement {
 		window.onload = () => {
 			GridStack.renderCB = async (el, w) => {
 
-				if(w.subGridOpts){
-
-					el.id = `widget-${self._counterId}`;
-					w.id = self._counterId;
-
-					self._counterId++;
-
-					return;
-				};
+				el.append(self.createDragHandler());
 
 				const iframe = document.createElement('iframe');
 				iframe.style.border = 'none';
 				iframe.style.width = '100%'; // fill width of container
 				iframe.style.height = 'auto';
-				iframe.onload = () => {
-					const doc = iframe.contentDocument || iframe.contentWindow.document;
-					const resize = () => {
-						iframe.style.height = doc.body.scrollHeight + 'px';
-					};
-					resize();
+				iframe.setAttribute('allowtransparency', 'true');
+				iframe.style.background = 'transparent';
 
-					// Optionally observe future changes
-					new ResizeObserver(resize).observe(doc.body);
-				};
+				if(w.subGridOpts){
+					iframe.style.height = '100%';
+					iframe.style.position = 'absolute';
+				}else{
+
+					iframe.onload = () => {
+						const doc = iframe.contentDocument || iframe.contentWindow.document;
+						const resize = () => {
+							iframe.style.height = doc.body.scrollHeight + 'px';
+						};
+						resize();
+
+						// Optionally observe future changes
+						new ResizeObserver(resize).observe(doc.body);
+					};
+				}
 				iframe.srcdoc = w.content;
 				self._iframes.push(iframe);
 				el.append(iframe)
@@ -311,6 +355,11 @@ class ELEMENT extends HTMLElement {
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
 		<script src="/vendor/DaisyUI/tailwind-4.js"></script>
 		<style>
+			html, body {
+            	margin: 0;
+            	padding: 0;
+            	background: transparent !important;
+          	}
 			.btn { background-color: aqua; width: 100% }
 		</style>
 	</head>
@@ -334,6 +383,11 @@ class ELEMENT extends HTMLElement {
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
 		<script src="/vendor/DaisyUI/tailwind-4.js"></script>
 		<style>
+			html, body {
+            	margin: 0;
+            	padding: 0;
+            	background: transparent !important;
+          	}
 		</style>
 	</head>
 	<body>
@@ -369,6 +423,11 @@ class ELEMENT extends HTMLElement {
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
 		<script src="/vendor/DaisyUI/tailwind-4.js"></script>
 		<style>
+			html, body {
+            	margin: 0;
+            	padding: 0;
+            	background: transparent !important;
+          	}
 		</style>
 	</head>
 	<body>
@@ -386,11 +445,34 @@ class ELEMENT extends HTMLElement {
 	</body>
 </html>
     			`},
-    			 {x:5, y:0, w:3, h:15, locked: 'yes', subGridOpts: {children: [{x:0, y:0, h:15, w: 5, locked: 'yes', content: `<html>
+    			 {x:5, y:0, w:3, h:15, locked: 'yes', 
+    			 content: `<html>
+	<head>
+		<meta name="color-scheme" content="light dark">
+		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
+		<script src="/vendor/DaisyUI/tailwind-4.js"></script>
+		<style>
+			html, body {
+            	margin: 0;
+            	padding: 0;
+            	background: transparent !important;
+            }
+		</style>
+	</head>
+	<body class="flex items-center justify-center h-screen w-screen">
+		<div class="card bg-blue-500 w-[98vw] h-[98vh] shadow-sm"></div>
+	</body>
+</html>`,
+    			 subGridOpts: {children: [{x:0, y:0, h:15, w: 5, locked: 'yes', content: `<html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
 		<script src="/vendor/DaisyUI/tailwind-4.js"></script>
 		<style>
+			html, body {
+            	margin: 0;
+            	padding: 0;
+            	background: transparent !important;
+          	}
 		</style>
 	</head>
 	<body>
@@ -416,7 +498,8 @@ class ELEMENT extends HTMLElement {
 				acceptWidgets: true,
     			//removable: true,
     			resizable: { handles: 'n,ne,e,se,s,sw,w,nw'},
-    			minRow: 2
+    			minRow: 2,
+    			handle: '.drag-handler',
 			});
 			self._grid.load(items);
 

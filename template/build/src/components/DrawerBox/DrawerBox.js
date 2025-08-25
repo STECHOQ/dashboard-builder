@@ -37,30 +37,29 @@ class ELEMENT extends HTMLElement {
 		window.onload = () => {
 			GridStack.renderCB = async (el, w) => {
 
-				if(w.subGridOpts){
-
-					el.id = `widget-${self._counterId}`;
-					w.id = self._counterId;
-
-					self._counterId++;
-
-					return;
-				};
-
 				const iframe = document.createElement('iframe');
 				iframe.style.border = 'none';
 				iframe.style.width = '100%'; // fill width of container
 				iframe.style.height = 'auto';
-				iframe.onload = () => {
-					const doc = iframe.contentDocument || iframe.contentWindow.document;
-					const resize = () => {
-						iframe.style.height = doc.body.scrollHeight + 'px';
-					};
-					resize();
+				iframe.setAttribute('allowtransparency', 'true');
+				iframe.style.background = 'transparent';
 
-					// Optionally observe future changes
-					new ResizeObserver(resize).observe(doc.body);
-				};
+				if(w.subGridOpts){
+					iframe.style.height = '100%';
+					iframe.style.position = 'absolute';
+				}else{
+
+					iframe.onload = () => {
+						const doc = iframe.contentDocument || iframe.contentWindow.document;
+						const resize = () => {
+							iframe.style.height = doc.body.scrollHeight + 'px';
+						};
+						resize();
+
+						// Optionally observe future changes
+						new ResizeObserver(resize).observe(doc.body);
+					};
+				}
 				iframe.srcdoc = w.content;
 				self._iframes.push(iframe);
 				el.append(iframe)
@@ -70,6 +69,7 @@ class ELEMENT extends HTMLElement {
 				w.id = self._counterId;
 
 				self._counterId++;
+
     		};
 
 			self._grid = GridStack.init({

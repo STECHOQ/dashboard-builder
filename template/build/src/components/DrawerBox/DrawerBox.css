@@ -10,7 +10,8 @@ drawer-box .grid-stack-item-content {
 }
 
 drawer-box .grid-stack-nested {
-	width: 100%
+	width: 100%;
+	background: transparent;
 }
 
 drawer-box #right-click-menu {
