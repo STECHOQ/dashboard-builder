@@ -36,3 +36,14 @@ side-bar .custom-sidebar .navbar-toggle {
 	transition: left var(--sidebar-transition);
 	z-index: 1;
 }
+
+side-bar .tab-content {
+	width: 93vh;
+	height: calc(300px - 50px);
+}
+
+side-bar .tab-actual-content {
+	position: absolute;
+	width: 240px;
+	height: 92vh;
+}

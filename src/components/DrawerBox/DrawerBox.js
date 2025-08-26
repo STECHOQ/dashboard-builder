@@ -211,6 +211,12 @@ class ELEMENT extends HTMLElement {
 		const self = this;
 
 		let isWidget = false;
+
+		document.querySelector('#rightMenuClick-Edit').classList.add('hidden');
+		document.querySelector('#rightMenuClick-Delete').classList.add('hidden');
+		document.querySelector('#rightMenuClick-CreateComponent').classList.add('hidden');
+		document.querySelector('#rightMenuClick-CreateGroup').classList.add('hidden');
+
 		for(const key in self._selectedItem.classList){
 			const item = self._selectedItem.classList[key];
 
@@ -220,6 +226,14 @@ class ELEMENT extends HTMLElement {
 
 				case 'grid-stack-item-content':
 					isWidget = true;
+
+					document.querySelector('#rightMenuClick-Edit').classList.remove('hidden');
+					document.querySelector('#rightMenuClick-Delete').classList.remove('hidden');
+					break;
+
+				case 'grid-stack':
+					document.querySelector('#rightMenuClick-CreateComponent').classList.remove('hidden');
+					document.querySelector('#rightMenuClick-CreateGroup').classList.remove('hidden');
 					break;
 
 				default:
@@ -228,15 +242,9 @@ class ELEMENT extends HTMLElement {
 		}
 
 		if(isWidget){
-			document.querySelector('#rightMenuClick-Edit').classList.remove('hidden');
-			document.querySelector('#rightMenuClick-Delete').classList.remove('hidden');
-			document.querySelector('#rightMenuClick-CreateComponent').classList.add('hidden');
-			document.querySelector('#rightMenuClick-CreateGroup').classList.add('hidden');
+			
 		}else{
-			document.querySelector('#rightMenuClick-Edit').classList.add('hidden');
-			document.querySelector('#rightMenuClick-Delete').classList.add('hidden');
-			document.querySelector('#rightMenuClick-CreateComponent').classList.remove('hidden');
-			document.querySelector('#rightMenuClick-CreateGroup').classList.remove('hidden');
+			
 		}
 	}
 
@@ -500,6 +508,7 @@ class ELEMENT extends HTMLElement {
     			resizable: { handles: 'n,ne,e,se,s,sw,w,nw'},
     			minRow: 2,
     			handle: '.drag-handler',
+    			margin: 0,
 			});
 			self._grid.load(items);
 

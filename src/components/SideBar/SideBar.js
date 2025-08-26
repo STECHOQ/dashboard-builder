@@ -58,8 +58,40 @@ export default window.customElements.define(
 			const nav = document.createElement('div');
 			nav.classList.add('border-right', 'shadow', 'custom-sidebar');
 
-			const content = document.createElement('navbar-menu-content');
-			nav.append(content);
+			const contentWrapper = document.createElement('navbar-menu-content');
+			const content = document.createElement('side-bar-tabs');
+			contentWrapper.append(content);
+			/*contentWrapper.innerHTML = `
+			<div class="tabs tabs-lift tabs-bottom rotate-90 origin-top-left translate-x-73">
+  			  <input type="radio" name="my_tabs_5" class="tab" aria-label="Tab 1" checked="checked" />
+  			  <div class="tab-content bg-base-100 border-base-300 p-1">
+  			  	  <div class="origin-bottom-left h-full rotate-270 translate-x-60">
+  			  	  	  <div class="tab-actual-content">
+  			  	  	    Tab content 1
+  			  	  	  </div>
+  			  	  </div>
+  			  </div>
+
+  			  <input type="radio" name="my_tabs_5" class="tab" aria-label="Tab 2"/>
+			  <div class="tab-content bg-base-100 border-base-300 p-1">
+  			  	  <div class="origin-bottom-left h-full rotate-270 translate-x-60">
+  			  	  	  <div class="tab-actual-content">
+  			  	  	    Tab content 2
+  			  	  	  </div>
+  			  	  </div>
+  			  </div>
+
+  			  <input type="radio" name="my_tabs_5" class="tab" aria-label="Tab 3" />
+			  <div class="tab-content bg-base-100 border-base-300 p-1">
+  			  	  <div class="origin-bottom-left h-full rotate-270 translate-x-60">
+  			  	  	  <div class="tab-actual-content">
+  			  	  	    Tab content 3
+  			  	  	  </div>
+  			  	  </div>
+  			  </div>
+			</div>
+			`*/
+			nav.append(contentWrapper);
 
 			nav.append(self.createNavBar());
 
