@@ -24,9 +24,9 @@ export default window.customElements.define(
 			const tabName = `Tab_Menu`;
 
 			const tabsContent = [
-				{name: "Tab 1", content: self.createTabContent(1), checked: true},
-				{name: "Tab 2", content: self.createTabContent(2)},
-				{name: "Tab 3", content: self.createTabContent(3)},
+				{name: "Pages", content: self.createTabContent(1), checked: true},
+				{name: "Components", content: self.createTabContent(2)},
+				{name: "Examples", content: self.createTabContent(3)},
 			]
 
 			for(const tab of tabsContent){
@@ -43,7 +43,7 @@ export default window.customElements.define(
 				tabContent.classList.add('tab-content', 'bg-base-100', 'border-base-300', 'p-1');
 
 				const tabContentWrapper = document.createElement('div');
-				tabContentWrapper.classList.add('origin-bottom-left', 'h-full', 'rotate-270', 'translate-x-60');
+				tabContentWrapper.classList.add('origin-top-left', 'rotate-270', 'translate-y-60');
 				tabContent.append(tabContentWrapper);
 
 				const actualContentWrapper = document.createElement('div');
