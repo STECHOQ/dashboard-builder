@@ -24,7 +24,7 @@ export default window.customElements.define(
 			const tabName = `Tab_Menu`;
 
 			const tabsContent = [
-				{name: "Pages", content: self.createTabContent(1), checked: true},
+				{name: "Pages", content: document.createElement('tab-pages'), checked: true},
 				{name: "Components", content: self.createTabContent(2)},
 				{name: "Examples", content: self.createTabContent(3)},
 			]
@@ -60,9 +60,6 @@ export default window.customElements.define(
 
         connectedCallback(){
             const self = this;
-
-            self._isOpen = true;
-			self._navbarToggle;
 
 			self.append(self.createTabs());
 

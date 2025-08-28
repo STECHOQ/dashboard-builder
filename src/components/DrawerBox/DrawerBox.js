@@ -19,13 +19,11 @@ class ELEMENT extends HTMLElement {
 		return wrapper;
 	}
 
-	createMenuItem(className, name, url){
+	createMenuItem(name){
 		const self = this;
 
 		const item = document.createElement('li');
-		item.id = `rightMenuClick-${className}`
 		const link = document.createElement('a');
-		link.href = url;
 		link.innerText = name;
 		item.append(link);
 
@@ -42,18 +40,21 @@ class ELEMENT extends HTMLElement {
 		list.classList.add('menu', 'w-full', 'p-0');
 		menu.append(list);
 
-		const items = {
-			createComponent: self.createMenuItem('CreateComponent', 'Create Component', '#'),
-			createGroup: self.createMenuItem('CreateGroup', 'Create Group', '#'),
-			edit: self.createMenuItem('Edit', 'Edit', '#'),
-			delete: self.createMenuItem('Delete', 'Delete', '#')
+		self._rightClickItems = {
+			createComponent: self.createMenuItem('Create Component'),
+			createGroup: self.createMenuItem('Create Group'),
+			edit: self.createMenuItem('Edit'),
+			delete: self.createMenuItem('Delete'),
+			pageRename: self.createMenuItem('Rename'),
+			pageDelete: self.createMenuItem('Delete'),
+			pageSetDefault: self.createMenuItem('Set Default'),
 		}
 
-		for(const key in items){
-			list.append(items[key]);
+		for(const key in self._rightClickItems){
+			list.append(self._rightClickItems[key]);
 		}
 
-		items.createComponent.addEventListener('click', () => {
+		self._rightClickItems.createComponent.addEventListener('click', () => {
 			self._grid.addWidget({
 				content:  `
 <html>
@@ -77,7 +78,7 @@ class ELEMENT extends HTMLElement {
 </html>`, w: 1, h: 15, locked: 'yes'});
 		});
 
-		items.createGroup.addEventListener('click', () => {
+		self._rightClickItems.createGroup.addEventListener('click', () => {
 			self._grid.addWidget({
 				subGridOpts: {children: []},
 				w: 1, h: 15, locked: 'yes', 
@@ -102,7 +103,7 @@ class ELEMENT extends HTMLElement {
 			});
 		});
 
-		items.delete.addEventListener('click', () => {
+		self._rightClickItems.delete.addEventListener('click', () => {
 
 			const selectedId = Number(self._selectedItem.id.replace('widget-',''));
 			const components = self._grid.save();
@@ -116,7 +117,7 @@ class ELEMENT extends HTMLElement {
 			//self._grid.removeWidget(self._selectedItem.parentNode);
 		});
 
-		items.edit.addEventListener('click', () => {
+		self._rightClickItems.edit.addEventListener('click', () => {
 			const selectedId = Number(self._selectedItem.id.replace('widget-',''));
 
 			const components = self._grid.save();
@@ -131,6 +132,17 @@ class ELEMENT extends HTMLElement {
 			}
 
 		});
+
+		self._rightClickItems.pageRename.addEventListener('click', () => {
+			ui.emit('rightClick-pageRename', self._selectedItem.id);
+		});
+		self._rightClickItems.pageDelete.addEventListener('click', () => {
+			ui.emit('rightClick-pageDelete', self._selectedItem.id);
+		});
+		self._rightClickItems.pageSetDefault.addEventListener('click', () => {
+			ui.emit('rightClick-pageSetDefault', self._selectedItem.id);
+		});
+
 		return menu;
 	}
 
@@ -210,12 +222,9 @@ class ELEMENT extends HTMLElement {
 	_checkRightClickMenu(){
 		const self = this;
 
-		let isWidget = false;
-
-		document.querySelector('#rightMenuClick-Edit').classList.add('hidden');
-		document.querySelector('#rightMenuClick-Delete').classList.add('hidden');
-		document.querySelector('#rightMenuClick-CreateComponent').classList.add('hidden');
-		document.querySelector('#rightMenuClick-CreateGroup').classList.add('hidden');
+		for(const name in self._rightClickItems){
+			self._rightClickItems[name].classList.add('hidden');
+		}
 
 		for(const key in self._selectedItem.classList){
 			const item = self._selectedItem.classList[key];
@@ -225,26 +234,24 @@ class ELEMENT extends HTMLElement {
 					self._selectedItem = self._selectedItem.parentNode;
 
 				case 'grid-stack-item-content':
-					isWidget = true;
-
-					document.querySelector('#rightMenuClick-Edit').classList.remove('hidden');
-					document.querySelector('#rightMenuClick-Delete').classList.remove('hidden');
+					self._rightClickItems.edit.classList.remove('hidden');
+					self._rightClickItems.delete.classList.remove('hidden');
 					break;
 
 				case 'grid-stack':
-					document.querySelector('#rightMenuClick-CreateComponent').classList.remove('hidden');
-					document.querySelector('#rightMenuClick-CreateGroup').classList.remove('hidden');
+					self._rightClickItems.createComponent.classList.remove('hidden');
+					self._rightClickItems.createGroup.classList.remove('hidden');
+					break;
+
+				case 'page-item':
+					self._rightClickItems.pageRename.classList.remove('hidden');
+					self._rightClickItems.pageDelete.classList.remove('hidden');
+					self._rightClickItems.pageSetDefault.classList.remove('hidden');
 					break;
 
 				default:
 					break;
 			}
-		}
-
-		if(isWidget){
-			
-		}else{
-			
 		}
 	}
 

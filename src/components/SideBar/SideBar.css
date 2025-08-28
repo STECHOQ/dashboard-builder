@@ -46,4 +46,5 @@ side-bar .tab-actual-content {
 	position: absolute;
 	width: 240px;
 	height: 92vh;
+	overflow-y: scroll;
 }
