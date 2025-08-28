@@ -19,7 +19,7 @@ export default window.customElements.define(
 			const self = this;
 
 			const tabs = document.createElement('div');
-			tabs.classList.add('tabs', 'tabs-lift', 'tabs-bottom', 'rotate-90', 'origin-top-left', 'translate-x-73');
+			tabs.classList.add('tabs', 'tabs-lift', 'tabs-bottom', 'rotate-90', 'origin-top-left', 'translate-x-73', 'w-[93vh]');
 
 			const tabName = `Tab_Menu`;
 
