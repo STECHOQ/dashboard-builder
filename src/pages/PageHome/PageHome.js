@@ -39,7 +39,7 @@ class PageHome extends HTMLElement {
 	connectedCallback(){
 		const self = this;
 
-		self.classList.add('page-agregat');
+		self.append(document.createElement('right-click-menu'));
 
 		window.onload = async () => {
 			self.classList.add('show');

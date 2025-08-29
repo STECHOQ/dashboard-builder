@@ -4,6 +4,7 @@
 import './components/DrawerBox/DrawerBox.js';
 import './components/EditorBox/EditorBox.js';
 import './components/NavigationBar/NavigationBar.js';
+import './components/RightClickMenu/RightClickMenu.js';
 import './components/SideBar/SideBar.js';
 import './components/SideBarTabs/SideBarTabs.js';
 import './components/TabPages/TabPages.js';

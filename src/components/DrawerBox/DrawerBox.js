@@ -19,139 +19,6 @@ class ELEMENT extends HTMLElement {
 		return wrapper;
 	}
 
-	createMenuItem(name){
-		const self = this;
-
-		const item = document.createElement('li');
-		const link = document.createElement('a');
-		link.innerText = name;
-		item.append(link);
-
-		return item;
-	}
-
-	createRightClickMenu(){
-		const self = this;
-
-		const menu = document.createElement('div');
-		menu.id = 'right-click-menu';
-		menu.classList.add('menu', 'bg-base-100', 'shadow-lg', 'rounded-box', 'absolute', 'z-50');
-		const list = document.createElement('ul');
-		list.classList.add('menu', 'w-full', 'p-0');
-		menu.append(list);
-
-		self._rightClickItems = {
-			createComponent: self.createMenuItem('Create Component'),
-			createGroup: self.createMenuItem('Create Group'),
-			edit: self.createMenuItem('Edit'),
-			delete: self.createMenuItem('Delete'),
-			pageRename: self.createMenuItem('Rename'),
-			pageDelete: self.createMenuItem('Delete'),
-			pageSetDefault: self.createMenuItem('Set Default'),
-		}
-
-		for(const key in self._rightClickItems){
-			list.append(self._rightClickItems[key]);
-		}
-
-		self._rightClickItems.createComponent.addEventListener('click', () => {
-			self._grid.addWidget({
-				content:  `
-<html>
-	<head>
-		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
-		<script src="/vendor/DaisyUI/tailwind-4.js"></script>
-		<style>
-			html, body {
-            	margin: 0;
-            	padding: 0;
-            	background: transparent !important;
-          	}
-		</style>
-	</head>
-	<body>
-		<b>New Component</b>
-
-		<script type="module">
-		</script>
-	</body>
-</html>`, w: 1, h: 15, locked: 'yes'});
-		});
-
-		self._rightClickItems.createGroup.addEventListener('click', () => {
-			self._grid.addWidget({
-				subGridOpts: {children: []},
-				w: 1, h: 15, locked: 'yes', 
-				content: `
-				<html>
-	<head>
-		<meta name="color-scheme" content="light dark">
-		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
-		<script src="/vendor/DaisyUI/tailwind-4.js"></script>
-		<style>
-			html, body {
-            	margin: 0;
-            	padding: 0;
-            	background: transparent !important;
-            }
-		</style>
-	</head>
-	<body class="flex items-center justify-center h-screen w-screen">
-		<div class="card bg-base-100 w-[98vw] h-[98vh] shadow-sm"></div>
-	</body>
-</html>`
-			});
-		});
-
-		self._rightClickItems.delete.addEventListener('click', () => {
-
-			const selectedId = Number(self._selectedItem.id.replace('widget-',''));
-			const components = self._grid.save();
-			self.convertIframeContent(components);
-			self.findNode(components, selectedId, true);
-
-			self._grid.removeAll();
-			self._iframes = [];
-			self._grid.load(components);
-
-			//self._grid.removeWidget(self._selectedItem.parentNode);
-		});
-
-		self._rightClickItems.edit.addEventListener('click', () => {
-			const selectedId = Number(self._selectedItem.id.replace('widget-',''));
-
-			const components = self._grid.save();
-			self.convertIframeContent(components);
-			const selectedNode = self.findNode(components, selectedId);
-
-			self._editorBoxModal.showModal();
-			if(selectedNode.content){
-				ui.emit('update-editor', selectedNode.content)
-			}else{
-				ui.emit('update-editor', '')
-			}
-
-		});
-
-		self._rightClickItems.pageRename.addEventListener('click', () => {
-			ui.emit('rightClick-pageRename', self._selectedItem.id);
-		});
-		self._rightClickItems.pageDelete.addEventListener('click', () => {
-			ui.emit('rightClick-pageDelete', self._selectedItem.id);
-		});
-		self._rightClickItems.pageSetDefault.addEventListener('click', () => {
-			ui.emit('rightClick-pageSetDefault', self._selectedItem.id);
-		});
-
-		return menu;
-	}
-
-	moveOut(){
-		const self = this;
-
-		
-	}
-
 	createEditorModal(){
 		const self = this;
 
@@ -194,7 +61,7 @@ class ELEMENT extends HTMLElement {
 			/* need to improve to only update selected */
 			const editorValue = monaco.editor.getModels()[0].getValue();
 			 
-			const selectedId = Number(self._selectedItem.id.replace('widget-',''));
+			const selectedId = Number(self._selectedItemId.replace('widget-',''));
 			const components = self._grid.save();
 			self.convertIframeContent(components);
 			const selectedWidget = self.findNode(components, selectedId);
@@ -202,7 +69,8 @@ class ELEMENT extends HTMLElement {
 				selectedWidget.content = editorValue;
 			}
 
-			self._selectedItem.innerHTML = '';
+			const el = document.getElementById(self._selectedItemId);
+			el.innerHTML = '';
 			//self._grid.update(self._selectedItem.parentElement, selectedWidget)
 			self._grid.removeAll();
 			self._iframes = [];
@@ -217,42 +85,6 @@ class ELEMENT extends HTMLElement {
 
 	getRandomString(){
 		return Math.random().toString(36).substring(2);
-	}
-
-	_checkRightClickMenu(){
-		const self = this;
-
-		for(const name in self._rightClickItems){
-			self._rightClickItems[name].classList.add('hidden');
-		}
-
-		for(const key in self._selectedItem.classList){
-			const item = self._selectedItem.classList[key];
-
-			switch (item) {
-				case 'drag-handler':
-					self._selectedItem = self._selectedItem.parentNode;
-
-				case 'grid-stack-item-content':
-					self._rightClickItems.edit.classList.remove('hidden');
-					self._rightClickItems.delete.classList.remove('hidden');
-					break;
-
-				case 'grid-stack':
-					self._rightClickItems.createComponent.classList.remove('hidden');
-					self._rightClickItems.createGroup.classList.remove('hidden');
-					break;
-
-				case 'page-item':
-					self._rightClickItems.pageRename.classList.remove('hidden');
-					self._rightClickItems.pageDelete.classList.remove('hidden');
-					self._rightClickItems.pageSetDefault.classList.remove('hidden');
-					break;
-
-				default:
-					break;
-			}
-		}
 	}
 
 	convertIframeContent(nodes){
@@ -311,12 +143,7 @@ class ELEMENT extends HTMLElement {
     connectedCallback(){
         const self = this;
 
-        self._selectedItem;
-
 		self.append(self.createWrapper());
-		const rightClickMenu = self.createRightClickMenu()
-		rightClickMenu.classList.add("hidden");
-		self.append(rightClickMenu);
 
 		self._editorBoxModal = self.createEditorModal();
 		self.append(self._editorBoxModal)
@@ -539,39 +366,82 @@ class ELEMENT extends HTMLElement {
 			});
 		}
 
-		document.addEventListener("contextmenu", function (e) {
-  			e.preventDefault(); // prevent default context menu
-
-  			// Optional: only show menu when clicking on specific area
-  			// if (!e.target.closest('.grid-stack-item')) return;
-  			self._selectedItem = e.target;
-			self._checkRightClickMenu();
-
-  			// Calculate position and prevent overflow
-  			const menuWidth = 150;
-  			const menuHeight = 120;
-  			const pageWidth = window.innerWidth;
-  			const pageHeight = window.innerHeight;
-
-  			let posX = e.clientX;
-  			let posY = e.clientY;
-
-  			if (posX + menuWidth > pageWidth) posX = pageWidth - menuWidth;
-  			if (posY + menuHeight > pageHeight) posY = pageHeight - menuHeight;
-
-  			rightClickMenu.style.left = `${posX}px`;
-  			rightClickMenu.style.top = `${posY}px`;
-
-  			rightClickMenu.classList.remove("hidden");
-		});
-
-		// Hide menu on click elsewhere
-		document.addEventListener("click", () => {
-  			rightClickMenu.classList.add("hidden");
-		});
-
 
 		self._listeners = {
+			'rightClick-drawerCreateComponent': () => {
+				self._grid.addWidget({
+					content:  `
+<html>
+	<head>
+		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
+		<script src="/vendor/DaisyUI/tailwind-4.js"></script>
+		<style>
+			html, body {
+            	margin: 0;
+            	padding: 0;
+            	background: transparent !important;
+          	}
+		</style>
+	</head>
+	<body>
+		<b>New Component</b>
+
+		<script type="module">
+		</script>
+	</body>
+</html>`, w: 1, h: 15, locked: 'yes'});
+			},
+			'rightClick-drawerCreateGroup': () => {
+				self._grid.addWidget({
+					subGridOpts: {children: []},
+					w: 1, h: 15, locked: 'yes', 
+					content: `
+				<html>
+	<head>
+		<meta name="color-scheme" content="light dark">
+		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
+		<script src="/vendor/DaisyUI/tailwind-4.js"></script>
+		<style>
+			html, body {
+            	margin: 0;
+            	padding: 0;
+            	background: transparent !important;
+            }
+		</style>
+	</head>
+	<body class="flex items-center justify-center h-screen w-screen">
+		<div class="card bg-base-100 w-[98vw] h-[98vh] shadow-sm"></div>
+	</body>
+</html>`
+				});
+			},
+			'rightClick-drawerDelete': ({ detail }) => {
+				const selectedId = Number(detail.replace('widget-',''));
+				const components = self._grid.save();
+				self.convertIframeContent(components);
+				self.findNode(components, selectedId, true);
+
+				self._grid.removeAll();
+				self._iframes = [];
+				self._grid.load(components);
+
+				//self._grid.removeWidget(self._selectedItem.parentNode);
+			},
+			'rightClick-drawerEdit': ({ detail }) => {
+				const selectedId = Number(detail.replace('widget-',''));
+				self._selectedItemId = detail;
+
+				const components = self._grid.save();
+				self.convertIframeContent(components);
+				const selectedNode = self.findNode(components, selectedId);
+
+				self._editorBoxModal.showModal();
+				if(selectedNode.content){
+					ui.emit('update-editor', selectedNode.content)
+				}else{
+					ui.emit('update-editor', '')
+				}
+			},
 			'btn-test': () => {
 				alert("TEST")
 			},
