@@ -24,6 +24,7 @@ class EditorTabs extends HTMLElement {
 		const input = document.createElement('input');
 		input.setAttribute('type', 'radio');
 		input.setAttribute('name', tabName);
+		input.setAttribute('value', tabId);
 		if(checked){
 			input.setAttribute('checked', 'checked');
 		}
@@ -48,10 +49,20 @@ class EditorTabs extends HTMLElement {
 		btnClose.addEventListener('click', (e) => {
 			e.preventDefault();
 
+			// if current tab is opened, then open next tab 
+			const active = document.querySelector(`input[name="${tabName}"]:checked`);
+
 			label.remove();
 			tabContent.remove();
 
 			delete self._tabsContent[tabId];
+
+			if(active?.value == tabId){
+				const nextTab = document.querySelector(`input[name="${tabName}"]`);
+				if(nextTab){
+					nextTab.checked = true;
+				}
+			}
 		})
 
 		return {
@@ -59,9 +70,6 @@ class EditorTabs extends HTMLElement {
 			tabContent
 		}
 	}
-
-//const drawerBox = ;
-		//wrapperContent.append(drawerBox);
 
 	createTabs(){
 		const self = this;
@@ -75,15 +83,15 @@ class EditorTabs extends HTMLElement {
 			home: {
 				name: "Home", 
 				content: document.createElement('drawer-box'),
-				checked: true
 			},
 			login: {
 				name: "Login", 
 				content: document.createElement('drawer-box'), 
+				checked: true
 			},
 			404: {
 				name: "404", 
-				content: self.createTabContent(3)
+				content: self.createTabContent(3),
 			},
 		}
 
