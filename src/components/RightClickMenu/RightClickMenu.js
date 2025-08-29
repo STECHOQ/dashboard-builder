@@ -43,19 +43,21 @@ class RightClickMenu extends HTMLElement {
 		}
 
 		self._rightClickItems.drawerCreateComponent.addEventListener('click', () => {
-			ui.emit('rightClick-drawerCreateComponent');
+			ui.emit('rightClick-drawerCreateComponent', self._selectedItem.id);
 		});
 
 		self._rightClickItems.drawerCreateGroup.addEventListener('click', () => {
-			ui.emit('rightClick-drawerCreateGroup');
+			ui.emit('rightClick-drawerCreateGroup', self._selectedItem.id);
 		});
 
 		self._rightClickItems.drawerDelete.addEventListener('click', () => {
-			ui.emit('rightClick-drawerDelete', self._selectedItem.id);
+			const drawerEl = self.findParentDrawerId(self._selectedItem);
+			ui.emit('rightClick-drawerDelete', { id: self._selectedItem.id, drawerId: drawerEl.id });
 		});
 
 		self._rightClickItems.drawerEdit.addEventListener('click', () => {
-			ui.emit('rightClick-drawerEdit', self._selectedItem.id);
+			const drawerEl = self.findParentDrawerId(self._selectedItem);
+			ui.emit('rightClick-drawerEdit', { id: self._selectedItem.id, drawerId: drawerEl.id });
 		});
 
 		self._rightClickItems.pageRename.addEventListener('click', () => {
@@ -69,6 +71,22 @@ class RightClickMenu extends HTMLElement {
 		});
 
 		return menu;
+	}
+
+	// https://stackoverflow.com/questions/8729193/how-to-get-all-parent-nodes-of-given-element-in-pure-javascript
+	findParentDrawerId(element){
+		let a = element
+		let els = [];
+		while (a) {
+
+			if(a.classList.contains('drawer-main')){
+				return a;
+			}
+
+    		els.unshift(a);
+    		a = a.parentNode;
+		}
+		return null;
 	}
 
 	_selectedItem;
@@ -88,8 +106,6 @@ class RightClickMenu extends HTMLElement {
 					isFound = true;
 					self._selectedItem = self._selectedItem.parentNode;
 
-				case 'grid-stack-item-content':
-					isFound = true;
 					self._rightClickItems.drawerEdit.classList.remove('hidden');
 					self._rightClickItems.drawerDelete.classList.remove('hidden');
 					break;

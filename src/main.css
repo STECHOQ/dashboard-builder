@@ -3,6 +3,7 @@
 /* css components */
 @import url('./components/DrawerBox/DrawerBox.css');
 @import url('./components/EditorBox/EditorBox.css');
+@import url('./components/EditorTabs/EditorTabs.css');
 @import url('./components/NavigationBar/NavigationBar.css');
 @import url('./components/RightClickMenu/RightClickMenu.css');
 @import url('./components/SideBar/SideBar.css');

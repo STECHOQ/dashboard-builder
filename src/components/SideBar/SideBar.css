@@ -24,7 +24,7 @@ side-bar .custom-sidebar {
 
 side-bar .custom-sidebar .navbar-toggle {
 	position: absolute;
-	top: 2vh;
+	top: 20vh;
 	right: -35px;
 	background-color: var(--sidebar-color);
 	padding: 10px;

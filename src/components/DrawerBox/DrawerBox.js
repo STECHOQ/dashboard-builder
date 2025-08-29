@@ -6,81 +6,22 @@ class ELEMENT extends HTMLElement {
         super();
 	}
 
+	_drawerId;
 	createWrapper(){
 		const self = this;
+
+		const randomUUID = window.crypto.randomUUID();
 
 		const wrapper = document.createElement('div');
 		wrapper.classList.add('h-screen', 'overflow-auto');
 
 		const component = document.createElement('div');
-		component.classList.add('grid-stack');
+		component.classList.add('grid-stack', 'drawer-main');
+		component.id = `drawer-${randomUUID}`;
+		self._drawerId = component.id;
 		wrapper.append(component);
 
 		return wrapper;
-	}
-
-	createEditorModal(){
-		const self = this;
-
-		const dialog = document.createElement('dialog');
-		dialog.id = 'import-model';
-		dialog.classList.add('modal');
-
-		const modalBox = document.createElement('div');
-		modalBox.classList.add('modal-box', 'w-[80vw]', 'max-w-[80vw]', 'p-0');
-		dialog.append(modalBox);
-
-		const title = document.createElement('h3');
-		modalBox.append(title);
-		title.classList.add('text-lg', 'font-bold');
-		title.innerText = 'Edit Code';
-
-		const editorBox = document.createElement('editor-box');
-		editorBox.classList.add('w-full');
-		modalBox.append(editorBox);
-
-		const modalAction = document.createElement('div');
-		modalAction.classList.add('modal-action');
-		modalBox.append(modalAction);
-
-		const btnOpen = document.createElement('btn');
-		btnOpen.classList.add('btn');
-		btnOpen.innerText = 'Save';
-		modalAction.append(btnOpen);
-
-		const btnClose = document.createElement('btn');
-		btnClose.classList.add('btn');
-		btnClose.innerText = 'Close';
-		modalAction.append(btnClose);
-
-		btnClose.addEventListener('click', () => {
-			dialog.close();
-		})
-
-		btnOpen.addEventListener('click', () => {
-			/* need to improve to only update selected */
-			const editorValue = monaco.editor.getModels()[0].getValue();
-			 
-			const selectedId = Number(self._selectedItemId.replace('widget-',''));
-			const components = self._grid.save();
-			self.convertIframeContent(components);
-			const selectedWidget = self.findNode(components, selectedId);
-			if(selectedWidget.content){
-				selectedWidget.content = editorValue;
-			}
-
-			const el = document.getElementById(self._selectedItemId);
-			el.innerHTML = '';
-			//self._grid.update(self._selectedItem.parentElement, selectedWidget)
-			self._grid.removeAll();
-			self._iframes = [];
-
-			self._grid.load(components);
-
-			dialog.close();
-		})
-
-		return dialog;
 	}
 
 	getRandomString(){
@@ -145,53 +86,47 @@ class ELEMENT extends HTMLElement {
 
 		self.append(self.createWrapper());
 
-		self._editorBoxModal = self.createEditorModal();
-		self.append(self._editorBoxModal)
-
 		self._iframes = [];
 
-		self._counterId = 0;
-		window.onload = () => {
-			GridStack.renderCB = async (el, w) => {
+		GridStack.renderCB = async (el, w) => {
 
-				el.append(self.createDragHandler());
+			el.append(self.createDragHandler());
 
-				const iframe = document.createElement('iframe');
-				iframe.style.border = 'none';
-				iframe.style.width = '100%'; // fill width of container
-				iframe.style.height = 'auto';
-				iframe.setAttribute('allowtransparency', 'true');
-				iframe.style.background = 'transparent';
+			const iframe = document.createElement('iframe');
+			iframe.style.border = 'none';
+			iframe.style.width = '100%'; // fill width of container
+			iframe.style.height = 'auto';
+			iframe.setAttribute('allowtransparency', 'true');
+			iframe.style.background = 'transparent';
 
-				if(w.subGridOpts){
-					iframe.style.height = '100%';
-					iframe.style.position = 'absolute';
-				}else{
+			if(w.subGridOpts){
+				iframe.style.height = '100%';
+				iframe.style.position = 'absolute';
+			}else{
 
-					iframe.onload = () => {
-						const doc = iframe.contentDocument || iframe.contentWindow.document;
-						const resize = () => {
-							iframe.style.height = doc.body.scrollHeight + 'px';
-						};
-						resize();
-
-						// Optionally observe future changes
-						new ResizeObserver(resize).observe(doc.body);
+				iframe.onload = () => {
+					const doc = iframe.contentDocument || iframe.contentWindow.document;
+					const resize = () => {
+						iframe.style.height = doc.body.scrollHeight + 'px';
 					};
-				}
-				iframe.srcdoc = w.content;
-				self._iframes.push(iframe);
-				el.append(iframe)
+					resize();
 
-				//el.id = `widget-${self.getRandomString()}_${w.x || 0}_${w.y || 0}`;
-				el.id = `widget-${self._counterId}`;
-				w.id = self._counterId;
+					// Optionally observe future changes
+					new ResizeObserver(resize).observe(doc.body);
+				};
+			}
+			iframe.srcdoc = w.content;
+			self._iframes.push(iframe);
+			el.append(iframe)
 
-				self._counterId++;
-    		};
+			//el.id = `widget-${self.getRandomString()}_${w.x || 0}_${w.y || 0}`;
+			const randomUUID = window.crypto.randomUUID();
+			el.id = `widget-${randomUUID}`;
+			w.id = randomUUID;
+    	};
 
-			const items = [
-    			{w: 1, h: 15, locked: 'yes', content: `
+		const items = [
+    		{w: 1, h: 15, locked: 'yes', content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -218,8 +153,8 @@ class ELEMENT extends HTMLElement {
 	</body>
 </html>
     			`
-    			}, 
-    			{w: 2, h: 30, locked: 'yes', content: `
+    		}, 
+    		{w: 2, h: 30, locked: 'yes', content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -258,8 +193,8 @@ class ELEMENT extends HTMLElement {
 	</body>
 </html>
     			`
-    			}, 
-				{x: 5, y: 30, w: 5, h: 15, locked: 'yes', content: `
+    		}, 
+			{x: 5, y: 30, w: 5, h: 15, locked: 'yes', content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -287,8 +222,8 @@ class ELEMENT extends HTMLElement {
 	</body>
 </html>
     			`},
-    			 {x:5, y:0, w:3, h:15, locked: 'yes', 
-    			 content: `<html>
+    		{x:5, y:0, w:3, h:15, locked: 'yes', 
+    			content: `<html>
 	<head>
 		<meta name="color-scheme" content="light dark">
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -305,7 +240,7 @@ class ELEMENT extends HTMLElement {
 		<div class="card bg-blue-500 w-[98vw] h-[98vh] shadow-sm"></div>
 	</body>
 </html>`,
-    			 subGridOpts: {children: [{x:0, y:0, h:15, w: 5, locked: 'yes', content: `<html>
+    			subGridOpts: {children: [{x:0, y:0, h:15, w: 5, locked: 'yes', content: `<html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
 		<script src="/vendor/DaisyUI/tailwind-4.js"></script>
@@ -331,44 +266,47 @@ class ELEMENT extends HTMLElement {
 		</script>
 	</body>
 </html>`}]}},
-			];
-			self._grid = GridStack.init({
-				float: true,
-				cellHeight: '1vh',
-				cellWidth: '1vw',
-				//staticGrid: true
-				acceptWidgets: true,
-    			//removable: true,
-    			resizable: { handles: 'n,ne,e,se,s,sw,w,nw'},
-    			minRow: 2,
-    			handle: '.drag-handler',
-    			margin: 0,
-			});
-			self._grid.load(items);
+		];
 
-			window.addEventListener('message', (event) => {
-				const { type, payload, _broadcasted } = event.data;
+		self._grid = GridStack.init({
+			float: true,
+			cellHeight: '1vh',
+			cellWidth: '1vw',
+			//staticGrid: true
+			acceptWidgets: true,
+    		//removable: true,
+    		resizable: { handles: 'n,ne,e,se,s,sw,w,nw'},
+    		minRow: 2,
+    		handle: '.drag-handler',
+    		margin: 0,
+		}, document.getElementById(self._drawerId));
+		self._grid.load(items);
 
-				if (_broadcasted && payload) {
-					// Re-broadcast to all iframes (except sender)
-					for (const iframe of self._iframes) {
-						if (iframe.contentWindow !== event.source) {
-							iframe.contentWindow.postMessage({ type, payload, _broadcasted: true }, '*');
-						}
+		window.addEventListener('message', (event) => {
+			const { type, payload, _broadcasted } = event.data;
+
+			if (_broadcasted && payload) {
+				// Re-broadcast to all iframes (except sender)
+				for (const iframe of self._iframes) {
+					if (iframe.contentWindow !== event.source) {
+						iframe.contentWindow.postMessage({ type, payload, _broadcasted: true }, '*');
 					}
+				}
 
-					// Optionally trigger locally too (parent self-handler)
-					/*window.dispatchEvent(new MessageEvent('message', {
+				// Optionally trigger locally too (parent self-handler)
+				/*window.dispatchEvent(new MessageEvent('message', {
 						data: { type, payload, _broadcasted: true },
 						origin: event.origin
 					}));*/
-				}
-			});
-		}
+			}
+		});
 
 
 		self._listeners = {
-			'rightClick-drawerCreateComponent': () => {
+			'rightClick-drawerCreateComponent': ({ detail }) => {
+
+				if(self._drawerId != detail) return;
+
 				self._grid.addWidget({
 					content:  `
 <html>
@@ -391,7 +329,10 @@ class ELEMENT extends HTMLElement {
 	</body>
 </html>`, w: 1, h: 15, locked: 'yes'});
 			},
-			'rightClick-drawerCreateGroup': () => {
+			'rightClick-drawerCreateGroup': ({ detail }) => {
+
+				if(self._drawerId != detail) return;
+
 				self._grid.addWidget({
 					subGridOpts: {children: []},
 					w: 1, h: 15, locked: 'yes', 
@@ -416,7 +357,11 @@ class ELEMENT extends HTMLElement {
 				});
 			},
 			'rightClick-drawerDelete': ({ detail }) => {
-				const selectedId = Number(detail.replace('widget-',''));
+				const {id, drawerId} = detail;
+
+				if(self._drawerId != drawerId) return;
+
+				const selectedId = id.replace('widget-','');
 				const components = self._grid.save();
 				self.convertIframeContent(components);
 				self.findNode(components, selectedId, true);
@@ -428,19 +373,48 @@ class ELEMENT extends HTMLElement {
 				//self._grid.removeWidget(self._selectedItem.parentNode);
 			},
 			'rightClick-drawerEdit': ({ detail }) => {
-				const selectedId = Number(detail.replace('widget-',''));
-				self._selectedItemId = detail;
+
+				const {id, drawerId} = detail;
+
+				if(self._drawerId != drawerId) return;
+
+				const selectedId = id.replace('widget-','');
+				self._selectedItemId = id;
 
 				const components = self._grid.save();
 				self.convertIframeContent(components);
 				const selectedNode = self.findNode(components, selectedId);
 
-				self._editorBoxModal.showModal();
 				if(selectedNode.content){
 					ui.emit('update-editor', selectedNode.content)
 				}else{
 					ui.emit('update-editor', '')
 				}
+
+				ui.emit('open-editor', self._drawerId);
+			},
+			'drawer-editorOk': ({ detail }) => {
+
+				if(self._drawerId != detail) return;
+
+				/* need to improve to only update selected */
+				const editorValue = monaco.editor.getModels()[0].getValue();
+
+				const selectedId = self._selectedItemId.replace('widget-','');
+				const components = self._grid.save();
+				self.convertIframeContent(components);
+				const selectedWidget = self.findNode(components, selectedId);
+				if(selectedWidget.content){
+					selectedWidget.content = editorValue;
+				}
+
+				const el = document.getElementById(self._selectedItemId);
+				el.innerHTML = '';
+				//self._grid.update(self._selectedItem.parentElement, selectedWidget)
+				self._grid.removeAll();
+				self._iframes = [];
+
+				self._grid.load(components);
 			},
 			'btn-test': () => {
 				alert("TEST")
