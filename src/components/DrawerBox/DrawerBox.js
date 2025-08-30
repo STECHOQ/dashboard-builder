@@ -125,7 +125,7 @@ class ELEMENT extends HTMLElement {
 			w.id = randomUUID;
     	};
 
-		const items = [
+		/*const items = [
     		{w: 1, h: 15, locked: 'yes', content: `
 <html>
 	<head>
@@ -266,8 +266,9 @@ class ELEMENT extends HTMLElement {
 		</script>
 	</body>
 </html>`}]}},
-		];
+		];*/
 
+		const items = [];
 		self._grid = GridStack.init({
 			float: true,
 			cellHeight: '1vh',

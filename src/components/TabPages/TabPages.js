@@ -23,13 +23,18 @@ export default window.customElements.define(
 			if(self._pages[id] === undefined){
 				self._pages[id] = {
 					name: name,
-					element: itemLink
+					element: itemLink,
+					components: []
 				}
 			}else{
 				if(self._pages[id].element === null){
 					self._pages[id].element = itemLink;
 				}
 			}
+
+			itemLink.addEventListener('click', () => {
+				ui.emit('open-page', name)
+			})
 
 			return item;
 		}
@@ -42,12 +47,13 @@ export default window.customElements.define(
 			const list = document.createElement('ul');
 			list.classList.add('menu', 'w-full');
 
-			self._pages = {
+			/*self._pages = {
 				'item-page-home': {
 					name: 'Home',
 					element: null
 				},
-			}
+			}*/ 
+			self._pages = {};
 
 			for(const pageIndex in self._pages){
 				const name = self._pages[pageIndex].name;

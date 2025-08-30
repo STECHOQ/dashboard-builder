@@ -2,6 +2,9 @@ import router from '../../models/router.js';
 import ui from '../../models/ui.js';
 import { utils, hDate, hNumber } from '../../helper/index.js';
 
+
+const tabName = `Tab_Pages`;
+
 class EditorTabs extends HTMLElement {
 	constructor(){
 		super();
@@ -15,7 +18,7 @@ class EditorTabs extends HTMLElement {
 		return content;
 	}
 
-	createTab({ name, content, checked }, tabId, tabName){
+	createTab({ name, content, checked }, tabId){
 		const self = this;
 
 		const label = document.createElement('label');
@@ -45,6 +48,10 @@ class EditorTabs extends HTMLElement {
 		tabContent.classList.add('tab-content', 'bg-base-100', 'border-base-300', 'p-1');
 
 		tabContent.append(content);
+		self._tabsContent[tabId] = {
+			name,
+			input
+		}
 
 		btnClose.addEventListener('click', (e) => {
 			e.preventDefault();
@@ -66,20 +73,18 @@ class EditorTabs extends HTMLElement {
 		})
 
 		return {
-			label,
+			label, 
 			tabContent
-		}
+		};
 	}
 
 	createTabs(){
 		const self = this;
 
-		const tabs = document.createElement('div');
-		tabs.classList.add('tabs', 'tabs-lift', 'w-full', 'h-full');
+		self._tabs = document.createElement('div');
+		self._tabs.classList.add('tabs', 'tabs-lift', 'w-full', 'h-full');
 
-		const tabName = `Tab_Pages`;
-
-		self._tabsContent = {
+		/*self._tabsContent = {
 			home: {
 				name: "Home", 
 				content: document.createElement('drawer-box'),
@@ -98,12 +103,13 @@ class EditorTabs extends HTMLElement {
 		for(const tabId in self._tabsContent){
 			const tab = self._tabsContent[tabId];
 
-			const {label, tabContent} = self.createTab(tab, tabId, tabName);
+			const {label, tabContent} = self.createTab(tab, tabId);
 
 			tabs.append(label, tabContent);
-		}
+		}*/
+		self._tabsContent = {};
 
-		return tabs;
+		return self._tabs;
 	}
 
 	connectedCallback(){
@@ -113,6 +119,25 @@ class EditorTabs extends HTMLElement {
 		self.classList.add('w-full');
 
 		self._listeners = {
+			'open-page': ({ detail }) => {
+
+				const tabId = utils.toKebabCase(detail);
+
+				// check if tab already exist 
+				if(self._tabsContent[tabId]){
+					self._tabsContent[tabId].input.checked = true;
+					return;
+				}
+
+				// open tab
+				const { label, tabContent } = self.createTab({ 
+					name: detail, 
+					content: document.createElement('drawer-box'), 
+					checked: true
+				}, tabId);
+
+				self._tabs.append(label, tabContent);
+			}
 		}
 
 		for(let key in self._listeners){
