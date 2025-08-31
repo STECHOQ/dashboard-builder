@@ -3,7 +3,6 @@ drawer-box .grid-stack {
 	min-height: 100vh;
 }
 drawer-box .grid-stack-item-content { 
-	border: 1px dashed black;
 	border-radius: 5px; 
 	display: flex;
 	align-items: center;
@@ -17,18 +16,4 @@ drawer-box .grid-stack-nested {
 
 drawer-box #right-click-menu {
   min-width: 150px;
-}
-
-drawer-box .drag-handler {
-	position: absolute;
-	width: 50px;
-	height: 30px;
-	top: 10px;
-	right: 10px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	background: #D4D4D4;
-	border-radius: 5px;
-	z-index: 1;
 }

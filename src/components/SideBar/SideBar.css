@@ -1,0 +1,50 @@
+side-bar {
+	display: block;
+	width: var(--sidebar-width);
+	height: 100vh;
+	transition: margin-left var(--sidebar-transition);
+	margin-left: 0px;
+	background-color: var(--sidebar-color);
+	z-index: 10;
+}
+
+side-bar.hide-close {
+	margin-left: calc(var(--sidebar-width) * -1);
+}
+
+side-bar.mobile {
+	position: fixed;
+}
+
+side-bar .custom-sidebar {
+	position: relative;
+	height: 100%;
+	display: flex;
+}
+
+side-bar .custom-sidebar .navbar-toggle {
+	position: absolute;
+	top: 20vh;
+	right: -35px;
+	background-color: var(--sidebar-color);
+	padding: 10px;
+	border: var(--sidebar-border);
+	border-left: none;
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+	cursor: pointer;
+	transition: left var(--sidebar-transition);
+	z-index: 1;
+}
+
+side-bar .tab-content {
+	width: 93vh;
+	height: calc(300px - 50px);
+}
+
+side-bar .tab-actual-content {
+	position: absolute;
+	width: 240px;
+	height: 92vh;
+	overflow-y: scroll;
+}

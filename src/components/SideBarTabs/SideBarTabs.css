@@ -1,0 +1,10 @@
+side-bar-tabs .tab-content {
+	width: 93vh;
+	height: calc(300px - 50px);
+}
+
+side-bar-tabs .tab-actual-content {
+	position: absolute;
+	width: 240px;
+	height: 92vh;
+}
