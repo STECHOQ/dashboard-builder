@@ -462,12 +462,12 @@ class ELEMENT extends HTMLElement {
 				alert("TEST")
 			},
 			'btn-import': ({ detail }) => {
-				self._grid.removeAll();
+				/*self._grid.removeAll();
 				self._iframes = [];
-				self._grid.load(detail.data);
+				self._grid.load(detail.data);*/
 			},
 			'btn-export': () => {
-				const components = self._grid.save();
+				/*const components = self._grid.save();
 				self.convertIframeContent(components);
 
 				const blob = new Blob([JSON.stringify(components)], { type: 'application/json' });
@@ -480,6 +480,7 @@ class ELEMENT extends HTMLElement {
   				a.click();
 
   				URL.revokeObjectURL(url); // free up memory
+  				*/
 			},
 			'btn-build': async () => {
 

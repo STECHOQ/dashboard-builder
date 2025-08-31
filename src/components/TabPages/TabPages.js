@@ -54,6 +54,9 @@ export default window.customElements.define(
 
 			const list = document.createElement('ul');
 			list.classList.add('menu', 'w-full');
+			list.id = 'list-tab-pages';
+
+			self._listPages = list;
 
 			/*self._pages = {
 				'item-page-home': {
@@ -156,6 +159,13 @@ export default window.customElements.define(
 			return dialog;
 		}
 
+		clearPages(){
+			const self = this;
+
+			self._listPages.innerHTML = '';
+			self._pages = {};
+		}
+
         connectedCallback(){
             const self = this;
 
@@ -203,13 +213,50 @@ export default window.customElements.define(
 				},
 				'rightClick-pageSetDefault': ({ detail }) => {
 				},
-
 				'drawer-update': ({ detail }) => {
 					const {pageId, components} = detail;
 					const id = `tab-page-${pageId}`
 
 					self._pages[id].components = components;
-				}
+				},
+				'btn-export': () => {
+					const pages = {}
+					for(const pageIndex in self._pages){
+						const id = pageIndex.replace('tab-page-', '')
+						pages[id] = {
+							name: self._pages[pageIndex].name,
+							components: structuredClone(self._pages[pageIndex].components)
+						}
+					}
+
+					const blob = new Blob([JSON.stringify(pages)], { type: 'application/json' });
+  					const url = URL.createObjectURL(blob);
+  					const epoch = Math.floor(Date.now() / 1000);
+
+  					const a = document.createElement('a');
+  					a.href = url;
+  					a.download = `project-${epoch}.json`;
+  					a.click();
+
+  					URL.revokeObjectURL(url); // free up memory
+				},
+				'btn-import': ({ detail }) => {
+					// close all opened tabs 
+					ui.emit('clear-tabs');
+
+					// remove all pages 
+					self.clearPages();
+
+					// re-add pages 
+					const newPages = detail.data;
+
+					for(const pIndex in newPages){
+						const pageId = `tab-page-${pIndex}`;
+						self._pages[pageId] = newPages[pIndex];
+						self._listPages.append(self.createItemPage(newPages[pIndex].name));
+					}
+
+				},
 			}
 
 			for(let key in self._listeners){

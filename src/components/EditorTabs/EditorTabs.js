@@ -78,6 +78,14 @@ class EditorTabs extends HTMLElement {
 		};
 	}
 
+	clearTabs(){
+		const self = this;
+
+		self._tabs.innerHTML = '';
+		self._tabsContent = {};
+
+	}
+
 	createTabs(){
 		const self = this;
 
@@ -142,6 +150,9 @@ class EditorTabs extends HTMLElement {
 				const { label, tabContent } = self.createTab(tabData, tabId);
 
 				self._tabs.append(label, tabContent);
+			},
+			'clear-tabs': () => {
+				self.clearTabs();
 			}
 		}
 
