@@ -11,7 +11,7 @@ export default window.customElements.define(
 		createItemPage(name){
 			const self = this;
 
-			const id = utils.toKebabCase(name);
+			const id = utils.toKebabCase(`tab-page-${name}`);
 
 			const item = document.createElement('li');
 			const itemLink = document.createElement('a');
@@ -32,9 +32,11 @@ export default window.customElements.define(
 				}
 			}
 
-			itemLink.addEventListener('click', () => {
-				const name = self._pages[id].name;
-				const components = self._pages[id].components
+			itemLink.addEventListener('click', (e) => {
+				const selectedId = utils.toKebabCase(`tab-page-${e.target.innerText}`);
+
+				const name = self._pages[selectedId].name;
+				const components = self._pages[selectedId].components
 
 				ui.emit('open-page', {
 					name,
@@ -78,7 +80,7 @@ export default window.customElements.define(
 				let newName = '';
 				while(true){
 					newName = `New Page ${++self._newPageCounter}`;
-					const newId = utils.toKebabCase(`ItemPage${newName}`);
+					const newId = utils.toKebabCase(`tab-page-${newName}`);
 					if(self._pages[newId] === undefined) break;
 				}
 				
@@ -134,7 +136,7 @@ export default window.customElements.define(
 			btnOpen.addEventListener('click', () => {
 
 				const newName = self._elRenameInput.value;
-				const newId = utils.toKebabCase(`ItemPage${newName}`);
+				const newId = utils.toKebabCase(`tab-page-${newName}`);
 
 				if(self._pages[newId] === undefined){
 					self._pages[self._selectedPageId].name = newName;
@@ -142,6 +144,10 @@ export default window.customElements.define(
 					self._pages[self._selectedPageId].element.id = newId;
 					self._pages[newId] = self._pages[self._selectedPageId];
 					delete self._pages[self._selectedPageId];
+
+				}else{
+					alert(`page "${newName}" is already exist`);
+					return
 				}
 
 				dialog.close();
@@ -165,11 +171,33 @@ export default window.customElements.define(
 
 			self._listeners = {
 				'rightClick-pageRename': ({ detail }) => {
+
+					// check if editor tab is opened
+					const drawers = document.getElementsByTagName('drawer-box');
+					for(const drawer of drawers){
+						const oldId = detail.replace('tab-page-','');
+						if(drawer.getAttribute('page-id') == oldId){
+							alert(`Can't rename opened page`);
+							return;
+						}
+					}
+
 					self._selectedPageId = detail;
 					self._elRenameInput.value = self._pages[detail].name;
 					contents.renameDialog.showModal()
 				},
 				'rightClick-pageDelete': ({ detail }) => {
+
+					// check if editor tab is opened
+					const drawers = document.getElementsByTagName('drawer-box');
+					for(const drawer of drawers){
+						const oldId = detail.replace('tab-page-','');
+						if(drawer.getAttribute('page-id') == oldId){
+							alert(`Can't delete opened page`);
+							return;
+						}
+					}
+
 					self._pages[detail].element.parentElement.remove();
 					delete self._pages[detail];
 				},
@@ -178,8 +206,9 @@ export default window.customElements.define(
 
 				'drawer-update': ({ detail }) => {
 					const {pageId, components} = detail;
+					const id = `tab-page-${pageId}`
 
-					self._pages[pageId].components = components;
+					self._pages[id].components = components;
 				}
 			}
 
