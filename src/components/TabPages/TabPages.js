@@ -8,32 +8,76 @@ export default window.customElements.define(
             super();
 		}
 
+		createDefaultMark(){
+			const self = this;
+			const icon = document.createElement('i');
+			icon.classList.add('fa-solid', 'fa-star', 'text-yellow-500');
+
+			return icon;
+		}
+
 		createItemPage(name){
 			const self = this;
 
 			const id = utils.toKebabCase(`tab-page-${name}`);
 
 			const item = document.createElement('li');
-			const itemLink = document.createElement('a');
-			itemLink.classList.add('page-item');
+			item.classList.add('bg-base-100', 'shadow-sm');
+
+			const itemLink = document.createElement('div');
+			itemLink.classList.add('page-item', 'flex', 'flex-col', 'items-start');
 			itemLink.id = id;
-			itemLink.innerText = name
+
+			const titleWrapper = document.createElement('div');
+			titleWrapper.classList.add('flex', 'w-full', 'justify-between', 'page-item-content');
+
+			const defaultMark = self.createDefaultMark();
+			defaultMark.classList.add('page-item-content-2', 'hidden');
+
+			const title = document.createElement('p');
+			title.classList.add('page-item-content-2');
+			title.innerText = name;
+
+			titleWrapper.append(title, defaultMark);
+
+			const routePath = document.createElement('p');
+			routePath.classList.add('text-gray-400', 'text-sm', 'page-item-content');
+			routePath.innerText = id.replace('tab-page-', '/');
+
+			itemLink.append(titleWrapper, routePath);
+
 			item.append(itemLink);
 
 			if(self._pages[id] === undefined){
 				self._pages[id] = {
 					name: name,
-					element: itemLink,
+					element: {
+						main: itemLink,
+						title: title,
+						routePath: routePath,
+						defaultMark: defaultMark
+					},
+					isDefault: false,
 					components: []
 				}
 			}else{
-				if(self._pages[id].element === null){
-					self._pages[id].element = itemLink;
+				if(!self._pages[id].element){
+					self._pages[id].element = {
+						main: itemLink,
+						title: title,
+						routePath: routePath,
+						defaultMark: defaultMark
+					}
 				}
 			}
 
+			if(self._pages[id].isDefault){
+				defaultMark.classList.remove('hidden');
+			}
+
 			itemLink.addEventListener('click', (e) => {
-				const selectedId = utils.toKebabCase(`tab-page-${e.target.innerText}`);
+				const selectedPageName = e.target.querySelector('p.page-item-content-2').innerText;
+				const selectedId = utils.toKebabCase(`tab-page-${selectedPageName}`);
 
 				const name = self._pages[selectedId].name;
 				const components = self._pages[selectedId].components
@@ -143,8 +187,9 @@ export default window.customElements.define(
 
 				if(self._pages[newId] === undefined){
 					self._pages[self._selectedPageId].name = newName;
-					self._pages[self._selectedPageId].element.innerText = newName;
-					self._pages[self._selectedPageId].element.id = newId;
+					self._pages[self._selectedPageId].element.title.innerText = newName;
+					self._pages[self._selectedPageId].element.routePath.innerText = newId.replace('tab-page-', '/');
+					self._pages[self._selectedPageId].element.main.id = newId;
 					self._pages[newId] = self._pages[self._selectedPageId];
 					delete self._pages[self._selectedPageId];
 
@@ -208,10 +253,17 @@ export default window.customElements.define(
 						}
 					}
 
-					self._pages[detail].element.parentElement.remove();
+					self._pages[detail].element.main.parentElement.remove();
 					delete self._pages[detail];
 				},
 				'rightClick-pageSetDefault': ({ detail }) => {
+					for(const pIndex in self._pages){
+						self._pages[pIndex].isDefault = false;
+						self._pages[pIndex].element.defaultMark.classList.add('hidden');
+					}
+
+					self._pages[detail].isDefault = true;
+					self._pages[detail].element.defaultMark.classList.remove('hidden');
 				},
 				'drawer-update': ({ detail }) => {
 					const {pageId, components} = detail;
@@ -225,7 +277,8 @@ export default window.customElements.define(
 						const id = pageIndex.replace('tab-page-', '')
 						pages[id] = {
 							name: self._pages[pageIndex].name,
-							components: structuredClone(self._pages[pageIndex].components)
+							isDefault: self._pages[pageIndex].isDefault,
+							components: structuredClone(self._pages[pageIndex].components),
 						}
 					}
 

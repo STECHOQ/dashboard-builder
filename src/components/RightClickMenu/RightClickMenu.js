@@ -116,6 +116,12 @@ class RightClickMenu extends HTMLElement {
 					self._rightClickItems.drawerCreateGroup.classList.remove('hidden');
 					break;
 
+				case 'page-item-content-2':
+					self._selectedItem = self._selectedItem.parentNode;
+
+				case 'page-item-content':
+					self._selectedItem = self._selectedItem.parentNode;
+
 				case 'page-item':
 					isFound = true;
 					self._rightClickItems.pageRename.classList.remove('hidden');
