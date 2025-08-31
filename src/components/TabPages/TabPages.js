@@ -11,7 +11,7 @@ export default window.customElements.define(
 		createItemPage(name){
 			const self = this;
 
-			const id = utils.toKebabCase(`ItemPage${name}`);
+			const id = utils.toKebabCase(name);
 
 			const item = document.createElement('li');
 			const itemLink = document.createElement('a');
@@ -33,7 +33,13 @@ export default window.customElements.define(
 			}
 
 			itemLink.addEventListener('click', () => {
-				ui.emit('open-page', name)
+				const name = self._pages[id].name;
+				const components = self._pages[id].components
+
+				ui.emit('open-page', {
+					name,
+					components
+				})
 			})
 
 			return item;
@@ -169,6 +175,12 @@ export default window.customElements.define(
 				},
 				'rightClick-pageSetDefault': ({ detail }) => {
 				},
+
+				'drawer-update': ({ detail }) => {
+					const {pageId, components} = detail;
+
+					self._pages[pageId].components = components;
+				}
 			}
 
 			for(let key in self._listeners){

@@ -28,6 +28,12 @@ class ELEMENT extends HTMLElement {
 		return Math.random().toString(36).substring(2);
 	}
 
+	setData(items = []){
+		const self = this;
+
+		self._items = items;
+	}
+
 	convertIframeContent(nodes){
 		const self = this;
 
@@ -268,7 +274,6 @@ class ELEMENT extends HTMLElement {
 </html>`}]}},
 		];*/
 
-		const items = [];
 		self._grid = GridStack.init({
 			float: true,
 			cellHeight: '1vh',
@@ -281,7 +286,43 @@ class ELEMENT extends HTMLElement {
     		handle: '.drag-handler',
     		margin: 0,
 		}, document.getElementById(self._drawerId));
-		self._grid.load(items);
+
+		self._pageId = self.getAttribute('page-id');
+
+		self._grid.load(self._items || []);
+
+		self._grid.on('change', (e) => {
+			//console.log('CHANGE', e)
+
+			const components = self._grid.save();
+			self.convertIframeContent(components);
+			ui.emit('drawer-update', {
+				pageId: self._pageId,
+				components
+			})
+		})
+
+		self._grid.on('added', (e) => {
+			//console.log('ADD', e)
+
+			const components = self._grid.save();
+			self.convertIframeContent(components);
+			ui.emit('drawer-update', {
+				pageId: self._pageId,
+				components
+			})
+		})
+
+		self._grid.on('removed', (e) => {
+			//console.log('REMOVE', e)
+
+			const components = self._grid.save();
+			self.convertIframeContent(components);
+			ui.emit('drawer-update', {
+				pageId: self._pageId,
+				components
+			})
+		})
 
 		window.addEventListener('message', (event) => {
 			const { type, payload, _broadcasted } = event.data;

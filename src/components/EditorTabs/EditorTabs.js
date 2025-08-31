@@ -120,8 +120,9 @@ class EditorTabs extends HTMLElement {
 
 		self._listeners = {
 			'open-page': ({ detail }) => {
+				const { name, components } = detail;
 
-				const tabId = utils.toKebabCase(detail);
+				const tabId = utils.toKebabCase(name);
 
 				// check if tab already exist 
 				if(self._tabsContent[tabId]){
@@ -130,11 +131,15 @@ class EditorTabs extends HTMLElement {
 				}
 
 				// open tab
-				const { label, tabContent } = self.createTab({ 
-					name: detail, 
+				const tabData = { 
+					name: name, 
 					content: document.createElement('drawer-box'), 
 					checked: true
-				}, tabId);
+				}
+				tabData.content.setAttribute('page-id', tabId);
+				tabData.content.setData(components);
+
+				const { label, tabContent } = self.createTab(tabData, tabId);
 
 				self._tabs.append(label, tabContent);
 			}
