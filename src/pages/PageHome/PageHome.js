@@ -100,6 +100,11 @@ class PageHome extends HTMLElement {
 			self.checkNotif();
 		}
 
+		// as refresh confirmation
+		window.addEventListener("beforeunload", function (event) {
+      		event.preventDefault();
+    	});
+
 		const wrapper = self.createWrapper();
 		//~ self.createForm();
 
