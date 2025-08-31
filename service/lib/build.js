@@ -50,10 +50,15 @@ class build{
 
 
 		// listing page 
+		let defaultPath = '';
 		for(const page in pages){
 
 			const pageTitle = self.capitalizeFirstLetter(page);
-			const pageContent = pages[page];
+			const pageContent = pages[page].components;
+
+			if(pages[page].isDefault){
+				defaultPath = page;
+			}
 
 			// create page and rename the name 
 			await cp(join(sessionPath, 'src', 'pages', 'PageTemplate'), join(sessionPath, 'src', 'pages', `Page${pageTitle}`), { recursive: true, force: true });
@@ -69,11 +74,19 @@ class build{
     		content = content.replace(/PageTemplate/g, `Page${pageTitle}`);
 			content = content.replace(/page-template/g, 'page-' + self.toKebabCase(pageTitle));
 
-			// replace /* components array */  in each page 
-			content = content.replace(/\/\* components array \*\//g, JSON.stringify(pageContent, null, 2));
+			// replace COMPONENTS_ARRAY in each page 
+			content = content.replace(/COMPONENTS_ARRAY/g, JSON.stringify(pageContent, null, 2));
 			
 			await writeFile(filePath, content, "utf8");
 		}
+
+		// replace DEFAULT_PAGE in main.js 
+		const mainjsPath = join(sessionPath, 'src', 'main.js');
+		let contentMainjs = await readFile(mainjsPath, "utf8");
+    	contentMainjs = contentMainjs.replace(/DEFAULT_PAGE/g, `"/${defaultPath}"`);
+
+		await writeFile(mainjsPath, contentMainjs, "utf8");
+
 
 		// delete PageTemplate 
 		await rm(
@@ -111,7 +124,13 @@ class build{
   		if (string.length === 0) {
     		return ""; // Handle empty strings
   		}
-  		return string.charAt(0).toUpperCase() + string.slice(1);
+
+  		const splitter = string.split('-');
+  		let result = "";
+  		for(const word of splitter){
+  			result += word.charAt(0).toUpperCase() + word.slice(1);
+  		}
+  		return result;
 	}
 
 	toKebabCase(str) {

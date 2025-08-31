@@ -310,6 +310,45 @@ export default window.customElements.define(
 					}
 
 				},
+				'btn-build': async () => {
+
+					const pages = {}
+					for(const pageIndex in self._pages){
+						const id = pageIndex.replace('tab-page-', '')
+						pages[id] = {
+							name: self._pages[pageIndex].name,
+							isDefault: self._pages[pageIndex].isDefault,
+							components: structuredClone(self._pages[pageIndex].components),
+						}
+					}
+
+					const response = await fetch('/api/build', {
+						method: 'post',
+						body: JSON.stringify(pages)
+					})
+
+					if(response.ok){
+						const blob = await response.blob();
+  						const url = window.URL.createObjectURL(blob);
+
+  						const a = document.createElement("a");
+  						a.href = url;
+
+						const disposition = response.headers.get("Content-Disposition");
+						let filename = "download.zip";
+						if (disposition && disposition.includes("filename=")) {
+  							filename = disposition.split("filename=")[1].replace(/"/g, "");
+						}
+
+  						a.download = filename;
+  						document.body.appendChild(a);
+  						a.click();
+  						a.remove();
+
+  						// cleanup
+  						window.URL.revokeObjectURL(url);
+  					}
+				}
 			}
 
 			for(let key in self._listeners){

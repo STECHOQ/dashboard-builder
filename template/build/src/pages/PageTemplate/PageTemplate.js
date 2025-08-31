@@ -12,7 +12,7 @@ class PageTemplate extends HTMLElement {
 		wrapper.classList.add('h-screen');
 
 		const items = 
-		/* components array */
+		COMPONENTS_ARRAY
 
 		const drawerBox = document.createElement('drawer-box');
 		drawerBox.setData(items);

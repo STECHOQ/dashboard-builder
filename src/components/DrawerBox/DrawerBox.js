@@ -484,7 +484,7 @@ class ELEMENT extends HTMLElement {
 			},
 			'btn-build': async () => {
 
-				const pages = {
+				/*const pages = {
 					home: {}
 				}
 
@@ -518,7 +518,7 @@ class ELEMENT extends HTMLElement {
 
   					// cleanup
   					window.URL.revokeObjectURL(url);
-  				}
+  				}*/
 			}
 		}
 
