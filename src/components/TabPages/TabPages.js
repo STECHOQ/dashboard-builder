@@ -76,7 +76,18 @@ export default window.customElements.define(
 			}
 
 			itemLink.addEventListener('click', (e) => {
-				const selectedPageName = e.target.querySelector('p.page-item-content-2').innerText;
+
+				let selectedElement = e.target;
+
+				if(e.target.classList.contains('page-item-content')){
+					selectedElement = e.target.parentElement;
+				}
+
+				if(e.target.classList.contains('page-item-content-2')){
+					selectedElement = e.target.parentElement.parentElement;
+				}
+
+				const selectedPageName = selectedElement.querySelector('p.page-item-content-2').innerText;
 				const selectedId = utils.toKebabCase(`tab-page-${selectedPageName}`);
 
 				const name = self._pages[selectedId].name;

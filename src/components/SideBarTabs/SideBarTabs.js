@@ -25,7 +25,7 @@ export default window.customElements.define(
 
 			const tabsContent = [
 				{name: "Pages", content: document.createElement('tab-pages'), checked: true},
-				{name: "Components", content: self.createTabContent(2)},
+				{name: "Components", content: document.createElement('tab-components')},
 				{name: "Examples", content: self.createTabContent(3)},
 			]
 

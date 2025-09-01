@@ -282,7 +282,6 @@ class ELEMENT extends HTMLElement {
 			acceptWidgets: true,
     		//removable: true,
     		resizable: { handles: 'n,ne,e,se,s,sw,w,nw'},
-    		minRow: 2,
     		handle: '.drag-handler',
     		margin: 0,
 		}, document.getElementById(self._drawerId));
@@ -379,7 +378,7 @@ class ELEMENT extends HTMLElement {
 					subGridOpts: {children: []},
 					w: 1, h: 15, locked: 'yes', 
 					content: `
-				<html>
+<html>
 	<head>
 		<meta name="color-scheme" content="light dark">
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -519,7 +518,15 @@ class ELEMENT extends HTMLElement {
   					// cleanup
   					window.URL.revokeObjectURL(url);
   				}*/
-			}
+			},
+			'drawer-createComponent': ({ detail }) => {
+
+				const { pageId, component } = detail;
+
+				if(self._pageId != pageId) return;
+
+				self._grid.addWidget({ ...component, locked: 'yes'});
+			},
 		}
 
 		for(let key in self._listeners){

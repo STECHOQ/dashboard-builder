@@ -8,6 +8,7 @@ import './components/NavigationBar/NavigationBar.js';
 import './components/RightClickMenu/RightClickMenu.js';
 import './components/SideBar/SideBar.js';
 import './components/SideBarTabs/SideBarTabs.js';
+import './components/TabComponents/TabComponents.js';
 import './components/TabPages/TabPages.js';
 import './pages/Page404/Page404.js';
 import './pages/PageHome/PageHome.js';
