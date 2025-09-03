@@ -277,13 +277,15 @@ class ELEMENT extends HTMLElement {
 		self._grid = GridStack.init({
 			float: true,
 			cellHeight: '1vh',
-			cellWidth: '1vw',
 			//staticGrid: true
 			acceptWidgets: true,
     		//removable: true,
     		resizable: { handles: 'n,ne,e,se,s,sw,w,nw'},
     		handle: '.drag-handler',
     		margin: 0,
+    		column: 48,
+    		cellHeightThrottle: 0,
+    		lazyLoad: true,
 		}, document.getElementById(self._drawerId));
 
 		self._pageId = self.getAttribute('page-id');
