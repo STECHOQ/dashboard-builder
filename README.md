@@ -3,7 +3,7 @@ Create simple dashboard with only drag-and-drop. You can also import, export, bu
 <img width="1862" height="963" alt="image" src="https://github.com/user-attachments/assets/82c9a009-26f8-4b45-b55a-19ae0c8b1add" />  
 
 It use :
-- [gridstack.js](https://github.com/gridstack/gridstack.js) as editor (drag-and-drop)
+- [gridstack.js](https://gridstackjs.com/) as editor (drag-and-drop)
 - [Vite](https://vite.dev/) to wrap it
 - [DaisyUI](https://daisyui.com/) as default UI framework
 - [Fastify](https://fastify.dev/) as our service handler  
