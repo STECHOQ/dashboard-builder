@@ -6,6 +6,7 @@ It use :
 - [gridstack.js](https://github.com/gridstack/gridstack.js) as editor (drag-and-drop)
 - [Vite](https://vite.dev/) to wrap it
 - [DaisyUI](https://daisyui.com/) as default UI framework
+- [Fastify](https://fastify.dev/) as our service handler  
 
 Thanks to them, we can create this project.
 
