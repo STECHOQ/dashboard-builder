@@ -1,7 +1,6 @@
 {
-  "name": "dashboard",
-  "private": true,
-  "version": "0.0.0",
+  "name": "dashboard-builder",
+  "version": "0.1.0",
   "scripts": {
     "start": "./start",
     "build": "./build",
@@ -12,5 +11,6 @@
     "monaco-editor": "^0.52.2",
     "vite": "^7.0.4"
   },
-  "author": "rusminto https://github.com/rusminto"
+  "author": "rusminto https://github.com/rusminto",
+  "license": "MIT",
 }
