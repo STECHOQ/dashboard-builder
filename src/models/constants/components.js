@@ -1,7 +1,7 @@
 export default [
 	{
 		name: 'Accordion',
-		component: {w: 5, h: 15, content: `
+		component: {w: 20, h: 30, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -40,7 +40,7 @@ export default [
     },
 	{
 		name: 'Avatar',
-		component: {w: 1, h: 15, content: `
+		component: {w: 2, h: 10, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -68,7 +68,7 @@ export default [
     },
 	{
 		name: 'Alert',
-		component: {w: 5, h: 15, content: `
+		component: {w: 20, h: 10, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -97,7 +97,7 @@ export default [
     },
 	{
 		name: 'Badge',
-		component: {w: 1, h: 15, content: `
+		component: {w: 3, h: 5, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -122,7 +122,7 @@ export default [
     },
 	{
 		name: 'Breadcrumbs',
-		component: {w: 3, h: 15, content: `
+		component: {w: 15, h: 5, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -152,7 +152,7 @@ export default [
     },
 	{
 		name: 'Button',
-		component: {w: 1, h: 15, content: `
+		component: {w: 3, h: 5, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -176,7 +176,7 @@ export default [
     },
 	{
 		name: 'Card',
-		component: {w: 3, h: 30, content: `
+		component: {w: 12, h: 45, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -213,7 +213,7 @@ export default [
     },
 	{
 		name: 'Carousel',
-		component: {w: 5, h: 15, content: `
+		component: {w: 30, h: 45, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -273,7 +273,7 @@ export default [
     },
     {
 		name: 'Checkbox',
-		component: {w: 5, h: 15, content: `
+		component: {w: 3, h: 5, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -297,7 +297,7 @@ export default [
     },
     {
 		name: 'Collapse',
-		component: {w: 5, h: 15, content: `
+		component: {w: 15, h: 20, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -327,7 +327,7 @@ export default [
     },
     {
 		name: 'Countdown',
-		component: {w: 1, h: 15, content: `
+		component: {w: 3, h: 5, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -353,7 +353,7 @@ export default [
     },
 	{
 		name: 'Diff',
-		component: {w: 5, h: 15, content: `
+		component: {w: 20, h: 45, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -386,7 +386,7 @@ export default [
     },
 	{
 		name: 'Divider',
-		component: {w: 5, h: 15, content: `
+		component: {w: 15, h: 30, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -401,9 +401,9 @@ export default [
 	</head>
 	<body>
 		<div class="flex w-full flex-col">
-			<div class="card bg-base-300 rounded-box grid h-20 place-items-center">content</div>
+			<div class="card bg-white rounded-box grid h-20 place-items-center">content</div>
 			<div class="divider">OR</div>
-			<div class="card bg-base-300 rounded-box grid h-20 place-items-center">content</div>
+			<div class="card bg-white rounded-box grid h-20 place-items-center">content</div>
 		</div>
 
 		<script type="module">
@@ -413,38 +413,8 @@ export default [
     	}
     },
 	{
-		name: 'Dropdown',
-		component: {w: 3, h: 15, content: `
-<html>
-	<head>
-		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
-		<script src="/vendor/DaisyUI/tailwind-4.js"></script>
-		<style>
-			html, body {
-            	margin: 0;
-            	padding: 0;
-            	background: transparent !important;
-          	}
-		</style>
-	</head>
-	<body>
-		<details class="dropdown">
-			<summary class="btn m-1">open or close</summary>
-			<ul class="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-				<li><a>Item 1</a></li>
-				<li><a>Item 2</a></li>
-			</ul>
-		</details>
-
-		<script type="module">
-		</script>
-	</body>
-</html>`
-    	}
-    },
-	{
 		name: 'Fieldset',
-		component: {w: 3, h: 15, content: `
+		component: {w: 10, h: 20, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -458,7 +428,7 @@ export default [
 		</style>
 	</head>
 	<body>
-		<fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
+		<fieldset class="fieldset bg-base-100 border-base-200 rounded-box w-xs border p-4">
 			<legend class="fieldset-legend">Page title</legend>
 			<input type="text" class="input" placeholder="My awesome page" />
 			<p class="label">You can edit page title later on from settings</p>
@@ -472,7 +442,7 @@ export default [
     },
 	{
 		name: 'Filter',
-		component: {w: 3, h: 15, content: `
+		component: {w: 10, h: 5, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -501,7 +471,7 @@ export default [
     },
 	{
 		name: 'Footer',
-		component: {w: 5, h: 15, content: `
+		component: {w: 30, h: 10, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -515,9 +485,9 @@ export default [
 		</style>
 	</head>
 	<body>
-	<footer class="footer sm:footer-horizontal footer-center bg-base-300 text-base-content p-4">
+	<footer class="footer sm:footer-horizontal footer-center bg-white text-base-content p-4">
 		<aside>
-    		<p>Copyright © {new Date().getFullYear()} - All right reserved by PT Stechoq Robotika Indonesia</p>
+    		<p>Copyright © ${new Date().getFullYear()} - All right reserved by PT Stechoq Robotika Indonesia</p>
     	</aside>
 	</footer>
 		
@@ -529,7 +499,7 @@ export default [
     },
 	{
 		name: 'Indicator',
-		component: {w: 5, h: 15, content: `
+		component: {w: 7, h: 20, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -537,7 +507,7 @@ export default [
 		<style>
 			html, body {
             	margin: 0;
-            	padding: 0;
+            	padding: 10px;
             	background: transparent !important;
           	}
 		</style>
@@ -545,7 +515,7 @@ export default [
 	<body>
 		<div class="indicator">
 			<span class="indicator-item badge badge-primary">New</span>
-			<div class="bg-base-300 grid h-32 w-32 place-items-center">content</div>
+			<div class="bg-white grid h-32 w-32 place-items-center">content</div>
 		</div>
 		
 		<script type="module">
@@ -556,7 +526,7 @@ export default [
     },
 	{
 		name: 'Text Input',
-		component: {w: 5, h: 15, content: `
+		component: {w: 10, h: 5, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -580,7 +550,7 @@ export default [
     },
     {
 		name: 'Kbd',
-		component: {w: 5, h: 15, content: `
+		component: {w: 10, h: 5, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -604,7 +574,7 @@ export default [
     },
     {
 		name: 'Label',
-		component: {w: 5, h: 15, content: `
+		component: {w: 10, h: 5, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -631,7 +601,7 @@ export default [
     },
 	{
 		name: 'Link',
-		component: {w: 5, h: 15, content: `
+		component: {w: 5, h: 5, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -655,7 +625,7 @@ export default [
     },
 	{
 		name: 'List',
-		component: {w: 5, h: 15, content: `
+		component: {w: 15, h: 30, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -763,7 +733,7 @@ export default [
     },
 	{
 		name: 'Menu',
-		component: {w: 5, h: 15, content: `
+		component: {w: 10, h: 15, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -777,7 +747,7 @@ export default [
 		</style>
 	</head>
 	<body>
-		<ul class="menu bg-base-200 rounded-box w-56">
+		<ul class="menu bg-white rounded-box w-full">
 			<li><a>Item 1</a></li>
 			<li><a>Item 2</a></li>
 			<li><a>Item 3</a></li>
@@ -791,7 +761,7 @@ export default [
     },
 	{
 		name: 'Navbar',
-		component: {w: 5, h: 15, content: `
+		component: {w: 30, h: 10, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -817,7 +787,7 @@ export default [
     },
 	{
 		name: 'Pagination',
-		component: {w: 5, h: 15, content: `
+		component: {w: 8, h: 10, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -846,7 +816,7 @@ export default [
     },
 	{
 		name: 'Progress',
-		component: {w: 3, h: 15, content: `
+		component: {w: 10, h: 15, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -874,7 +844,7 @@ export default [
     },
 	{
 		name: 'Radial Progress',
-		component: {w: 5, h: 15, content: `
+		component: {w: 15, h: 15, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -902,7 +872,7 @@ export default [
     },
 	{
 		name: 'Radio',
-		component: {w: 1, h: 15, content: `
+		component: {w: 5, h: 5, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -927,7 +897,7 @@ export default [
     },
 	{
 		name: 'Range Slider',
-		component: {w: 5, h: 15, content: `
+		component: {w: 10, h: 15, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -967,7 +937,7 @@ export default [
     },
 	{
 		name: 'Rating',
-		component: {w: 3, h: 15, content: `
+		component: {w: 10, h: 5, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -1003,7 +973,7 @@ export default [
     },
 	{
 		name: 'Select',
-		component: {w: 3, h: 15, content: `
+		component: {w: 10, h: 10, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -1032,7 +1002,7 @@ export default [
     },
 	{
 		name: 'Stat',
-		component: {w: 3, h: 15, content: `
+		component: {w: 7, h: 15, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -1046,7 +1016,7 @@ export default [
 		</style>
 	</head>
 	<body>
-		<div class="stats shadow">
+		<div class="stats bg-white shadow">
 			<div class="stat">
 				<div class="stat-title">Total Page Views</div>
 				<div class="stat-value">89,400</div>
@@ -1062,7 +1032,7 @@ export default [
     },
 	{
 		name: 'Status',
-		component: {w: 3, h: 15, content: `
+		component: {w: 7, h: 5, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -1090,7 +1060,7 @@ export default [
     },
 	{
 		name: 'Steps',
-		component: {w: 3, h: 15, content: `
+		component: {w: 15, h: 10, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -1100,7 +1070,10 @@ export default [
             	margin: 0;
             	padding: 0;
             	background: transparent !important;
-          	}
+            }
+            .step {
+            	--step-bg: white;
+            }
 		</style>
 	</head>
 	<body>
@@ -1120,7 +1093,7 @@ export default [
     },
 	{
 		name: 'Swap',
-		component: {w: 3, h: 15, content: `
+		component: {w: 5, h: 5, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -1149,7 +1122,7 @@ export default [
     },
 	{
 		name: 'Tabs',
-		component: {w: 5, h: 15, content: `
+		component: {w: 15, h: 20, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -1184,7 +1157,7 @@ export default [
     },
 	{
 		name: 'Table',
-		component: {w: 5, h: 15, content: `
+		component: {w: 20, h: 20, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -1237,7 +1210,7 @@ export default [
     },
 	{
 		name: 'Text Area',
-		component: {w: 3, h: 15, content: `
+		component: {w: 10, h: 20, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -1261,7 +1234,7 @@ export default [
     },
 	{
 		name: 'Timeline',
-		component: {w: 5, h: 15, content: `
+		component: {w: 10, h: 20, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -1289,10 +1262,10 @@ export default [
 					</svg>
 				</div>
 				<div class="timeline-end timeline-box">First Macintosh computer</div>
-				<hr />
+				<hr class="bg-white" />
 			</li>
 			<li>
-				<hr />
+				<hr class="bg-white"  />
 				<div class="timeline-start">1998</div>
 				<div class="timeline-middle">
 				<svg 
@@ -1305,7 +1278,6 @@ export default [
 				</svg>
 				</div>
 				<div class="timeline-end timeline-box">iMac</div>
-				<hr />
 			</li>
 		</ul>
 
@@ -1317,7 +1289,7 @@ export default [
     },
 	{
 		name: 'Toggle',
-		component: {w: 1, h: 15, content: `
+		component: {w: 5, h: 5, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
