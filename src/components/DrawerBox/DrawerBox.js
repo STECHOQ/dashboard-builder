@@ -272,7 +272,8 @@ class ELEMENT extends HTMLElement {
 		</script>
 	</body>
 </html>`}]}},
-		];*/
+		];
+		self._items = items;*/
 
 		self._grid = GridStack.init({
 			float: true,
@@ -285,7 +286,6 @@ class ELEMENT extends HTMLElement {
     		margin: 0,
     		column: 48,
     		cellHeightThrottle: 0,
-    		lazyLoad: true,
 		}, document.getElementById(self._drawerId));
 
 		self._pageId = self.getAttribute('page-id');
@@ -370,15 +370,35 @@ class ELEMENT extends HTMLElement {
 		<script type="module">
 		</script>
 	</body>
-</html>`, w: 1, h: 15, locked: 'yes'});
+</html>`, w: 5, h: 10, locked: 'yes'});
 			},
 			'rightClick-drawerCreateGroup': ({ detail }) => {
 
 				if(self._drawerId != detail) return;
 
 				self._grid.addWidget({
-					subGridOpts: {children: []},
-					w: 1, h: 15, locked: 'yes', 
+					subGridOpts: {children: [{
+					content:  `
+<html>
+	<head>
+		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
+		<script src="/vendor/DaisyUI/tailwind-4.js"></script>
+		<style>
+			html, body {
+            	margin: 0;
+            	padding: 0;
+            	background: transparent !important;
+          	}
+		</style>
+	</head>
+	<body>
+		<b>New Group</b>
+
+		<script type="module">
+		</script>
+	</body>
+</html>`, w: 5, h: 10, locked: 'yes'}]},
+					w: 10, h: 15, locked: 'yes', 
 					content: `
 <html>
 	<head>

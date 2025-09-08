@@ -73,11 +73,15 @@ class ELEMENT extends HTMLElement {
     		};
 
 			self._grid = GridStack.init({
+				float: true,
 				cellHeight: '1vh',
 				cellWidth: '1vw',
 				//staticGrid: true
 				//acceptWidgets: true,
     			//removable: true,
+    			margin: 0,
+    			column: 48,
+    			cellHeightThrottle: 0,
 			});
 			
 			self._grid.setStatic(true)
