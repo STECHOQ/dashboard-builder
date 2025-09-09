@@ -176,7 +176,7 @@ export default [
     },
 	{
 		name: 'Card',
-		component: {w: 12, h: 45, content: `
+		component: {"subGridOpts":{"children":[{"content":`
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -190,26 +190,67 @@ export default [
 		</style>
 	</head>
 	<body>
-		<div class="card bg-base-100 w-96 shadow-sm">
-			<figure>
-				<img 
-				src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-				alt="Shoes" />
-    		</figure>
-    		<div class="card-body">
-    			<h2 class="card-title">Card Title</h2>
-    			<p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
-    			<div class="card-actions justify-end">
-    				<button class="btn btn-primary">Buy Now</button>
-    			</div>
-    		</div>
-		</div>
+		<h2 class="card-title">Card Title</h2>
 
 		<script type="module">
 		</script>
 	</body>
-</html>`
-    	}
+</html>`,"w":4,"h":5,"locked":"yes","x":1,"y":3},{"content":`
+<html>
+	<head>
+		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
+		<script src="/vendor/DaisyUI/tailwind-4.js"></script>
+		<style>
+			html, body {
+            	margin: 0;
+            	padding: 0;
+            	background: transparent !important;
+          	}
+		</style>
+	</head>
+	<body>
+		<p class="text-sm">A card component has a figure, a body part, and inside body there are title and actions parts!!!</p>
+
+		<script type="module">
+		</script>
+	</body>
+</html>`,"w":8,"h":8,"locked":"yes","x":1,"y":8},{"content":`
+<html>
+	<head>
+		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
+		<script src="/vendor/DaisyUI/tailwind-4.js"></script>
+		<style>
+			html, body {
+            	margin: 0;
+            	padding: 0;
+            	background: transparent !important;
+          	}
+		</style>
+	</head>
+	<body>
+		<button class="btn btn-primary">Buy Now</button>
+
+		<script type="module">
+		</script>
+	</body>
+</html>`,"w":3,"h":5,"locked":"yes","x":14,"y":16}]},"w":10,"h":23,"locked":"yes","content":`
+<html>
+	<head>
+		<meta name="color-scheme" content="light dark">
+		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
+		<script src="/vendor/DaisyUI/tailwind-4.js"></script>
+		<style>
+			html, body {
+            	margin: 0;
+            	padding: 0;
+            	background: transparent !important;
+            }
+		</style>
+	</head>
+	<body class="flex items-center justify-center h-screen w-screen">
+		<div class="card bg-base-100 w-[98vw] h-[98vh] shadow-sm"></div>
+	</body>
+</html>`}
     },
 	{
 		name: 'Carousel',
@@ -386,7 +427,7 @@ export default [
     },
 	{
 		name: 'Divider',
-		component: {w: 15, h: 30, content: `
+		component: {"subGridOpts":{"children":[{"content":`
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -400,17 +441,66 @@ export default [
 		</style>
 	</head>
 	<body>
-		<div class="flex w-full flex-col">
-			<div class="card bg-white rounded-box grid h-20 place-items-center">content</div>
-			<div class="divider">OR</div>
-			<div class="card bg-white rounded-box grid h-20 place-items-center">content</div>
-		</div>
+		<div class="card bg-white rounded-box grid h-20 place-items-center">content</div>
 
 		<script type="module">
 		</script>
 	</body>
-</html>`
-    	}
+</html>`,"w":14,"h":9,"locked":"yes","x":0,"y":3},{"content":`
+<html>
+	<head>
+		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
+		<script src="/vendor/DaisyUI/tailwind-4.js"></script>
+		<style>
+			html, body {
+            	margin: 0;
+            	padding: 0;
+            	background: transparent !important;
+          	}
+		</style>
+	</head>
+	<body>
+		<div class="divider m-0">OR</div>
+
+		<script type="module">
+		</script>
+	</body>
+</html>`,"w":14,"h":4,"locked":"yes","x":0,"y":12},{"content":`
+<html>
+	<head>
+		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
+		<script src="/vendor/DaisyUI/tailwind-4.js"></script>
+		<style>
+			html, body {
+            	margin: 0;
+            	padding: 0;
+            	background: transparent !important;
+          	}
+		</style>
+	</head>
+	<body>
+		<div class="card bg-white rounded-box grid h-20 place-items-center">content</div>
+
+		<script type="module">
+		</script>
+	</body>
+</html>`,"w":14,"h":10,"locked":"yes","x":0,"y":16}]},"w":14,"h":30,"locked":"yes","content":`
+<html>
+	<head>
+		<meta name="color-scheme" content="light dark">
+		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
+		<script src="/vendor/DaisyUI/tailwind-4.js"></script>
+		<style>
+			html, body {
+            	margin: 0;
+            	padding: 0;
+            	background: transparent !important;
+            }
+		</style>
+	</head>
+	<body>
+	</body>
+</html>`}
     },
 	{
 		name: 'Fieldset',
@@ -471,7 +561,7 @@ export default [
     },
 	{
 		name: 'Footer',
-		component: {w: 30, h: 10, content: `
+		component: {"subGridOpts":{"children":[{"content":`
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -485,17 +575,30 @@ export default [
 		</style>
 	</head>
 	<body>
-	<footer class="footer sm:footer-horizontal footer-center bg-white text-base-content p-4">
-		<aside>
-    		<p>Copyright © ${new Date().getFullYear()} - All right reserved by PT Stechoq Robotika Indonesia</p>
-    	</aside>
-	</footer>
-		
+		<p class="text-sm">Copyright © ${new Date().getFullYear()} - All right reserved by PT Stechoq Robotika Indonesia</p>
+
 		<script type="module">
 		</script>
 	</body>
-</html>`
-    	}
+</html>`,"w":15,"h":3,"locked":"yes","x":17,"y":1}]},"w":48,"h":6,"locked":"yes","content":`
+<html>
+	<head>
+		<meta name="color-scheme" content="light dark">
+		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
+		<script src="/vendor/DaisyUI/tailwind-4.js"></script>
+		<style>
+			html, body {
+            	margin: 0;
+            	padding: 0;
+            	background: transparent !important;
+                height: 100%;
+            }
+		</style>
+	</head>
+	<body>
+        <footer class="footer sm:footer-horizontal footer-center bg-white h-full"></footer>
+    </body>
+</html>`,"x":0,"y":94}
     },
 	{
 		name: 'Indicator',
@@ -761,7 +864,7 @@ export default [
     },
 	{
 		name: 'Navbar',
-		component: {w: 30, h: 10, content: `
+		component: {"subGridOpts":{"children":[{"content":`
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -775,15 +878,30 @@ export default [
 		</style>
 	</head>
 	<body>
-		<div class="navbar bg-base-100 shadow-sm">
-			<a class="btn btn-ghost text-xl">daisyUI</a>
-		</div>
-		
+		<a class="btn btn-ghost text-xl">daisyUI</a>
+
 		<script type="module">
 		</script>
 	</body>
-</html>`
-    	}
+</html>`,"w":4,"h":5,"locked":"yes","x":0,"y":1}]},"w":48,"h":7,"locked":"yes","content":`
+<html>
+	<head>
+		<meta name="color-scheme" content="light dark">
+		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
+		<script src="/vendor/DaisyUI/tailwind-4.js"></script>
+		<style>
+			html, body {
+            	margin: 0;
+            	padding: 0;
+            	background: transparent !important;
+                height: 100%;
+            }
+		</style>
+	</head>
+	<body>
+        <div class="navbar bg-base-100 shadow-sm"></div>
+    </body>
+</html>`,"x":0,"y":0}
     },
 	{
 		name: 'Pagination',
