@@ -9,7 +9,7 @@ class ELEMENT extends HTMLElement {
 		const self = this;
 
 		const wrapper = document.createElement('div');
-		wrapper.classList.add('h-screen', 'w-screen', 'overflow-auto');
+		wrapper.classList.add('overflow-auto', 'drawer-wrapper');
 
 		const component = document.createElement('div');
 		component.classList.add('grid-stack');
@@ -75,7 +75,6 @@ class ELEMENT extends HTMLElement {
 			self._grid = GridStack.init({
 				float: true,
 				cellHeight: '1vh',
-				cellWidth: '1vw',
 				//staticGrid: true
 				//acceptWidgets: true,
     			//removable: true,

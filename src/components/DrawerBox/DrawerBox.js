@@ -13,7 +13,7 @@ class ELEMENT extends HTMLElement {
 		const randomUUID = window.crypto.randomUUID();
 
 		const wrapper = document.createElement('div');
-		wrapper.classList.add('h-screen', 'overflow-auto');
+		wrapper.classList.add('overflow-auto', 'drawer-wrapper');
 
 		const component = document.createElement('div');
 		component.classList.add('grid-stack', 'drawer-main');
@@ -282,7 +282,7 @@ class ELEMENT extends HTMLElement {
 			acceptWidgets: true,
     		//removable: true,
     		resizable: { handles: 'n,ne,e,se,s,sw,w,nw'},
-    		handle: '.drag-handler',
+    		//handle: '.drag-handler',
     		margin: 0,
     		column: 48,
     		cellHeightThrottle: 0,
