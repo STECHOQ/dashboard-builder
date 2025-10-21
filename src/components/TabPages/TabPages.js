@@ -321,7 +321,9 @@ export default window.customElements.define(
 					}
 
 				},
-				'btn-build': async () => {
+				'btn-build': async ({ detail }) => {
+
+					const { isContentOnly } = detail;
 
 					const pages = {}
 					for(const pageIndex in self._pages){
@@ -335,7 +337,10 @@ export default window.customElements.define(
 
 					const response = await fetch('/api/build', {
 						method: 'post',
-						body: JSON.stringify(pages)
+						body: JSON.stringify({
+							pages,
+							compressContentOnly: isContentOnly
+						})
 					})
 
 					if(response.ok){

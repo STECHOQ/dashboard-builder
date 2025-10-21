@@ -102,8 +102,13 @@ class ELEMENT extends HTMLElement {
 
 		const btnBuild = document.createElement('button');
 		btnBuild.classList.add('btn', 'mr-2');
-		btnBuild.innerText = 'Build';
+		btnBuild.innerText = 'Build the dist';
 		wrapper.append(btnBuild);
+
+		const btnBuildContent = document.createElement('button');
+		btnBuildContent.classList.add('btn', 'mr-2');
+		btnBuildContent.innerText = 'Build Content Only';
+		wrapper.append(btnBuildContent);
 
 		btnImport.addEventListener('click', () => {
 			dialogImport.showModal();
@@ -114,7 +119,11 @@ class ELEMENT extends HTMLElement {
 		})
 
 		btnBuild.addEventListener('click', () => {
-			ui.emit('btn-build');
+			ui.emit('btn-build', { isContentOnly: false });
+		})
+
+		btnBuildContent.addEventListener('click', () => {
+			ui.emit('btn-build', { isContentOnly: true });
 		})
 
 		return component;
