@@ -13,7 +13,7 @@ const execAsync = promisify(exec);
 class build{
 	constructor(){}
 
-	async init(pages){
+	async init({ pages, compressContentOnly }){
 		const self = this;
 
 		// create session id 
@@ -100,9 +100,15 @@ class build{
     	});
 
 		// compress dist
-		await execAsync(`zip -r ${uuid}.zip dist`, {
-      		cwd: sessionPath,
-    	});
+		if(compressContentOnly){
+			await execAsync(`cd dist && zip -r ../${uuid}.zip .`, {
+      			cwd: sessionPath,
+    		});
+    	}else{
+			await execAsync(`zip -r ${uuid}.zip dist`, {
+      			cwd: sessionPath,
+    		});
+    	}
 
 		// sent it to user 
 		const buffer = createReadStream(join(sessionPath, `${uuid}.zip`));
