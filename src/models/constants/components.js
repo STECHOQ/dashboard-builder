@@ -1,7 +1,7 @@
 export default [
 	{
 		name: 'Accordion',
-		component: {w: 20, h: 30, content: `
+		component: {w: 20, h: 15, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -40,7 +40,7 @@ export default [
     },
 	{
 		name: 'Avatar',
-		component: {w: 2, h: 10, content: `
+		component: {w: 2, h: 5, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -68,7 +68,7 @@ export default [
     },
 	{
 		name: 'Alert',
-		component: {w: 20, h: 10, content: `
+		component: {w: 20, h: 5, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -97,7 +97,7 @@ export default [
     },
 	{
 		name: 'Badge',
-		component: {w: 3, h: 5, content: `
+		component: {w: 3, h: 2, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -122,7 +122,7 @@ export default [
     },
 	{
 		name: 'Breadcrumbs',
-		component: {w: 15, h: 5, content: `
+		component: {w: 15, h: 2, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -152,7 +152,7 @@ export default [
     },
 	{
 		name: 'Button',
-		component: {w: 3, h: 5, content: `
+		component: {w: 3, h: 2, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -195,7 +195,7 @@ export default [
 		<script type="module">
 		</script>
 	</body>
-</html>`,"w":4,"h":5,"locked":"yes","x":1,"y":3},{"content":`
+</html>`,"w":4,"h":2,"locked":"yes","x":1,"y":3},{"content":`
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -214,7 +214,7 @@ export default [
 		<script type="module">
 		</script>
 	</body>
-</html>`,"w":8,"h":8,"locked":"yes","x":1,"y":8},{"content":`
+</html>`,"w":8,"h":4,"locked":"yes","x":1,"y":8},{"content":`
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -233,7 +233,7 @@ export default [
 		<script type="module">
 		</script>
 	</body>
-</html>`,"w":3,"h":5,"locked":"yes","x":14,"y":16}]},"w":10,"h":23,"locked":"yes","content":`
+</html>`,"w":3,"h":2,"locked":"yes","x":14,"y":16}]},"w":10,"h":23,"locked":"yes","content":`
 <html>
 	<head>
 		<meta name="color-scheme" content="light dark">
@@ -254,7 +254,7 @@ export default [
     },
 	{
 		name: 'Carousel',
-		component: {w: 30, h: 45, content: `
+		component: {w: 30, h: 22, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -314,7 +314,7 @@ export default [
     },
     {
 		name: 'Checkbox',
-		component: {w: 3, h: 5, content: `
+		component: {w: 3, h: 2, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -338,7 +338,7 @@ export default [
     },
     {
 		name: 'Collapse',
-		component: {w: 15, h: 20, content: `
+		component: {w: 15, h: 10, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -368,7 +368,7 @@ export default [
     },
     {
 		name: 'Countdown',
-		component: {w: 3, h: 5, content: `
+		component: {w: 3, h: 2, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -394,7 +394,7 @@ export default [
     },
 	{
 		name: 'Diff',
-		component: {w: 20, h: 45, content: `
+		component: {w: 20, h: 22, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -446,7 +446,7 @@ export default [
 		<script type="module">
 		</script>
 	</body>
-</html>`,"w":14,"h":9,"locked":"yes","x":0,"y":3},{"content":`
+</html>`,"w":14,"h":4,"locked":"yes","x":0,"y":3},{"content":`
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -465,7 +465,7 @@ export default [
 		<script type="module">
 		</script>
 	</body>
-</html>`,"w":14,"h":4,"locked":"yes","x":0,"y":12},{"content":`
+</html>`,"w":14,"h":2,"locked":"yes","x":0,"y":12},{"content":`
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -484,7 +484,7 @@ export default [
 		<script type="module">
 		</script>
 	</body>
-</html>`,"w":14,"h":10,"locked":"yes","x":0,"y":16}]},"w":14,"h":30,"locked":"yes","content":`
+</html>`,"w":14,"h":5,"locked":"yes","x":0,"y":16}]},"w":14,"h":30,"locked":"yes","content":`
 <html>
 	<head>
 		<meta name="color-scheme" content="light dark">
@@ -504,7 +504,7 @@ export default [
     },
 	{
 		name: 'Fieldset',
-		component: {w: 10, h: 20, content: `
+		component: {w: 10, h: 10, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -532,7 +532,7 @@ export default [
     },
 	{
 		name: 'Filter',
-		component: {w: 10, h: 5, content: `
+		component: {w: 10, h: 2, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -580,7 +580,7 @@ export default [
 		<script type="module">
 		</script>
 	</body>
-</html>`,"w":15,"h":3,"locked":"yes","x":17,"y":1}]},"w":48,"h":6,"locked":"yes","content":`
+</html>`,"w":15,"h":1,"locked":"yes","x":17,"y":1}]},"w":48,"h":6,"locked":"yes","content":`
 <html>
 	<head>
 		<meta name="color-scheme" content="light dark">
@@ -602,7 +602,7 @@ export default [
     },
 	{
 		name: 'Indicator',
-		component: {w: 7, h: 20, content: `
+		component: {w: 7, h: 10, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -629,7 +629,7 @@ export default [
     },
 	{
 		name: 'Text Input',
-		component: {w: 10, h: 5, content: `
+		component: {w: 10, h: 2, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -653,7 +653,7 @@ export default [
     },
     {
 		name: 'Kbd',
-		component: {w: 10, h: 5, content: `
+		component: {w: 10, h: 2, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -677,7 +677,7 @@ export default [
     },
     {
 		name: 'Label',
-		component: {w: 10, h: 5, content: `
+		component: {w: 10, h: 2, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -704,7 +704,7 @@ export default [
     },
 	{
 		name: 'Link',
-		component: {w: 5, h: 5, content: `
+		component: {w: 5, h: 2, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -728,7 +728,7 @@ export default [
     },
 	{
 		name: 'List',
-		component: {w: 15, h: 30, content: `
+		component: {w: 15, h: 15, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -784,7 +784,7 @@ export default [
     },
 	{
 		name: 'Loading',
-		component: {w: 5, h: 15, content: `
+		component: {w: 5, h: 7, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -812,7 +812,7 @@ export default [
     },
 	{
 		name: 'Masked Image',
-		component: {w: 5, h: 15, content: `
+		component: {w: 5, h: 7, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -836,7 +836,7 @@ export default [
     },
 	{
 		name: 'Menu',
-		component: {w: 10, h: 15, content: `
+		component: {w: 10, h: 7, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -883,7 +883,7 @@ export default [
 		<script type="module">
 		</script>
 	</body>
-</html>`,"w":4,"h":5,"locked":"yes","x":0,"y":1}]},"w":48,"h":7,"locked":"yes","content":`
+</html>`,"w":4,"h":2,"locked":"yes","x":0,"y":1}]},"w":48,"h":7,"locked":"yes","content":`
 <html>
 	<head>
 		<meta name="color-scheme" content="light dark">
@@ -905,7 +905,7 @@ export default [
     },
 	{
 		name: 'Pagination',
-		component: {w: 8, h: 10, content: `
+		component: {w: 8, h: 5, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -934,7 +934,7 @@ export default [
     },
 	{
 		name: 'Progress',
-		component: {w: 10, h: 15, content: `
+		component: {w: 10, h: 7, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -962,7 +962,7 @@ export default [
     },
 	{
 		name: 'Radial Progress',
-		component: {w: 15, h: 15, content: `
+		component: {w: 15, h: 7, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -990,7 +990,7 @@ export default [
     },
 	{
 		name: 'Radio',
-		component: {w: 5, h: 5, content: `
+		component: {w: 5, h: 2, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -1015,7 +1015,7 @@ export default [
     },
 	{
 		name: 'Range Slider',
-		component: {w: 10, h: 15, content: `
+		component: {w: 10, h: 7, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -1055,7 +1055,7 @@ export default [
     },
 	{
 		name: 'Rating',
-		component: {w: 10, h: 5, content: `
+		component: {w: 10, h: 2, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -1091,7 +1091,7 @@ export default [
     },
 	{
 		name: 'Select',
-		component: {w: 10, h: 10, content: `
+		component: {w: 10, h: 5, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -1120,7 +1120,7 @@ export default [
     },
 	{
 		name: 'Stat',
-		component: {w: 7, h: 15, content: `
+		component: {w: 7, h: 7, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -1150,7 +1150,7 @@ export default [
     },
 	{
 		name: 'Status',
-		component: {w: 7, h: 5, content: `
+		component: {w: 7, h: 2, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -1178,7 +1178,7 @@ export default [
     },
 	{
 		name: 'Steps',
-		component: {w: 15, h: 10, content: `
+		component: {w: 15, h: 5, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -1211,7 +1211,7 @@ export default [
     },
 	{
 		name: 'Swap',
-		component: {w: 5, h: 5, content: `
+		component: {w: 5, h: 2, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -1240,7 +1240,7 @@ export default [
     },
 	{
 		name: 'Tabs',
-		component: {w: 15, h: 20, content: `
+		component: {w: 15, h: 10, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -1275,7 +1275,7 @@ export default [
     },
 	{
 		name: 'Table',
-		component: {w: 20, h: 20, content: `
+		component: {w: 20, h: 10, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -1328,7 +1328,7 @@ export default [
     },
 	{
 		name: 'Text Area',
-		component: {w: 10, h: 20, content: `
+		component: {w: 10, h: 10, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -1352,7 +1352,7 @@ export default [
     },
 	{
 		name: 'Timeline',
-		component: {w: 10, h: 20, content: `
+		component: {w: 10, h: 10, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
@@ -1407,7 +1407,7 @@ export default [
     },
 	{
 		name: 'Toggle',
-		component: {w: 5, h: 5, content: `
+		component: {w: 5, h: 2, content: `
 <html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
