@@ -101,12 +101,11 @@ class ELEMENT extends HTMLElement {
 			const iframe = document.createElement('iframe');
 			iframe.style.border = 'none';
 			iframe.style.width = '100%'; // fill width of container
-			iframe.style.height = 'auto';
+			iframe.style.height = '100%';
 			iframe.setAttribute('allowtransparency', 'true');
 			iframe.style.background = 'transparent';
 
 			if(w.subGridOpts){
-				iframe.style.height = '100%';
 				iframe.style.position = 'absolute';
 			}else{
 
@@ -277,7 +276,7 @@ class ELEMENT extends HTMLElement {
 
 		self._grid = GridStack.init({
 			float: true,
-			cellHeight: '1vh',
+			cellHeight: '2vh',
 			//staticGrid: true
 			acceptWidgets: true,
     		//removable: true,
@@ -370,7 +369,7 @@ class ELEMENT extends HTMLElement {
 		<script type="module">
 		</script>
 	</body>
-</html>`, w: 5, h: 10, locked: 'yes'});
+</html>`, w: 5, h: 5, locked: 'yes'});
 			},
 			'rightClick-drawerCreateGroup': ({ detail }) => {
 
@@ -397,8 +396,8 @@ class ELEMENT extends HTMLElement {
 		<script type="module">
 		</script>
 	</body>
-</html>`, w: 5, h: 10, locked: 'yes'}]},
-					w: 10, h: 15, locked: 'yes', 
+</html>`, w: 5, h: 5, locked: 'yes'}]},
+					w: 10, h: 8, locked: 'yes', 
 					content: `
 <html>
 	<head>
@@ -411,10 +410,14 @@ class ELEMENT extends HTMLElement {
             	padding: 0;
             	background: transparent !important;
             }
+            .card {
+            	height: calc(100vh - 5px);
+				width: calc(100vw - 5px);
+            }
 		</style>
 	</head>
 	<body class="flex items-center justify-center h-screen w-screen">
-		<div class="card bg-base-100 w-[98vw] h-[98vh] shadow-sm"></div>
+		<div class="card bg-base-100 shadow-sm"></div>
 	</body>
 </html>`
 				});

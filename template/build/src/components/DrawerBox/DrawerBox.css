@@ -16,9 +16,6 @@ drawer-box .drawer-wrapper {
 
 drawer-box .grid-stack-item-content { 
 	border-radius: 5px; 
-	display: flex;
-	align-items: center;
-	justify-content: center;
 }
 
 drawer-box .grid-stack-nested {

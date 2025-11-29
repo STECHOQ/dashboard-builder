@@ -40,12 +40,11 @@ class ELEMENT extends HTMLElement {
 				const iframe = document.createElement('iframe');
 				iframe.style.border = 'none';
 				iframe.style.width = '100%'; // fill width of container
-				iframe.style.height = 'auto';
+				iframe.style.height = '100%';
 				iframe.setAttribute('allowtransparency', 'true');
 				iframe.style.background = 'transparent';
 
 				if(w.subGridOpts){
-					iframe.style.height = '100%';
 					iframe.style.position = 'absolute';
 				}else{
 
@@ -74,7 +73,7 @@ class ELEMENT extends HTMLElement {
 
 			self._grid = GridStack.init({
 				float: true,
-				cellHeight: '1vh',
+				cellHeight: '2vh',
 				//staticGrid: true
 				//acceptWidgets: true,
     			//removable: true,
