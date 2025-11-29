@@ -13,7 +13,7 @@ const execAsync = promisify(exec);
 class build{
 	constructor(){}
 
-	async init({ pages, compressContentOnly }){
+	async init({ pages, compressContentOnly, isRaw }){
 		const self = this;
 
 		// create session id 
@@ -94,19 +94,25 @@ class build{
 			{ recursive: true, force: true }
 		);
 
-		// run build 
-		const { stdout, stderr } = await execAsync("node build", {
-      		cwd: sessionPath,
-    	});
-
-		// compress dist
-		if(compressContentOnly){
-			await execAsync(`cd dist && zip -r ../${uuid}.zip .`, {
+		if(!isRaw){
+			// run build 
+		 	await execAsync("node build", {
       			cwd: sessionPath,
     		});
+
+			// compress dist
+			if(compressContentOnly){
+				await execAsync(`cd dist && zip -r ../${uuid}.zip .`, {
+      				cwd: sessionPath,
+    			});
+    		}else{
+				await execAsync(`zip -r ${uuid}.zip dist`, {
+      				cwd: sessionPath,
+    			});
+    		}
     	}else{
-			await execAsync(`zip -r ${uuid}.zip dist`, {
-      			cwd: sessionPath,
+			await execAsync(`zip -r ${uuid}.zip ${uuid} && mv ${uuid}.zip ${uuid}/`, {
+      			cwd: join(rootPath, 'tmp'),
     		});
     	}
 

@@ -110,6 +110,11 @@ class ELEMENT extends HTMLElement {
 		btnBuildContent.innerText = 'Build Content Only';
 		wrapper.append(btnBuildContent);
 
+		const btnGetRaw = document.createElement('button');
+		btnGetRaw.classList.add('btn', 'mr-2');
+		btnGetRaw.innerText = 'Get Raw Folder';
+		wrapper.append(btnGetRaw);
+
 		btnImport.addEventListener('click', () => {
 			dialogImport.showModal();
 		})
@@ -124,6 +129,10 @@ class ELEMENT extends HTMLElement {
 
 		btnBuildContent.addEventListener('click', () => {
 			ui.emit('btn-build', { isContentOnly: true });
+		})
+
+		btnGetRaw.addEventListener('click', () => {
+			ui.emit('btn-build', { isRaw: true });
 		})
 
 		return component;

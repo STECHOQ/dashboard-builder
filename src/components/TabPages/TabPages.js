@@ -323,8 +323,6 @@ export default window.customElements.define(
 				},
 				'btn-build': async ({ detail }) => {
 
-					const { isContentOnly } = detail;
-
 					const pages = {}
 					for(const pageIndex in self._pages){
 						const id = pageIndex.replace('tab-page-', '')
@@ -339,7 +337,8 @@ export default window.customElements.define(
 						method: 'post',
 						body: JSON.stringify({
 							pages,
-							compressContentOnly: isContentOnly
+							compressContentOnly: detail.isContentOnly ? true : false,
+							isRaw: detail.isRaw ? true : false,
 						})
 					})
 
