@@ -9,7 +9,8 @@
   },
   "devDependencies": {
     "monaco-editor": "^0.52.2",
-    "vite": "^7.0.4"
+    "vite": "^7.0.4",
+    "vite-plugin-monaco-editor": "^1.1.0"
   },
   "author": "rusminto https://github.com/rusminto",
   "license": "MIT"

@@ -350,8 +350,7 @@ class ELEMENT extends HTMLElement {
 				if(self._drawerId != detail) return;
 
 				self._grid.addWidget({
-					content:  `
-<html>
+					content:  `<html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
 		<script src="/vendor/DaisyUI/tailwind-4.js"></script>
@@ -377,8 +376,7 @@ class ELEMENT extends HTMLElement {
 
 				self._grid.addWidget({
 					subGridOpts: {children: [{
-					content:  `
-<html>
+					content:  `<html>
 	<head>
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">
 		<script src="/vendor/DaisyUI/tailwind-4.js"></script>
@@ -398,8 +396,7 @@ class ELEMENT extends HTMLElement {
 	</body>
 </html>`, w: 5, h: 5, locked: 'yes'}]},
 					w: 10, h: 8, locked: 'yes', 
-					content: `
-<html>
+					content: `<html>
 	<head>
 		<meta name="color-scheme" content="light dark">
 		<link rel="stylesheet" href="/vendor/DaisyUI/daisyui-5.css">

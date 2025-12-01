@@ -1,5 +1,7 @@
 // PLEASE DON'T CHANGE EVERYTHING BETWEEN '/* ... */' blabla '/* end of ... */'
 
+import 'monaco-editor/min/vs/editor/editor.main.css';
+
 /* js components */
 import './components/DrawerBox/DrawerBox.js';
 import './components/EditorBox/EditorBox.js';
