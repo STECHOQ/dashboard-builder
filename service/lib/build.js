@@ -111,6 +111,12 @@ class build{
     			});
     		}
     	}else{
+
+			await rm(
+				join(sessionPath, "node_modules"), 
+				{ recursive: true, force: true }
+			);
+
 			await execAsync(`zip -r ${uuid}.zip ${uuid} && mv ${uuid}.zip ${uuid}/`, {
       			cwd: join(rootPath, 'tmp'),
     		});
