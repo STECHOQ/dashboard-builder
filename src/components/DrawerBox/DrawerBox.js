@@ -479,6 +479,22 @@ class ELEMENT extends HTMLElement {
 
 				self._grid.load(components);
 			},
+			'rightClick-drawerDuplicate': ({ detail }) => {
+
+				const {id, drawerId} = detail;
+
+				if(self._drawerId != drawerId) return;
+
+				const selectedId = id.replace('widget-','');
+				self._selectedItemId = id;
+
+				const components = self._grid.save();
+				self.convertIframeContent(components);
+				const selectedNode = self.findNode(components, selectedId);
+
+				/* need to improve to only update selected */
+				self._grid.addWidget(selectedNode);
+			},
 			'btn-test': () => {
 				alert("TEST")
 			},

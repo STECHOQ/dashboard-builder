@@ -276,6 +276,26 @@ export default window.customElements.define(
 					self._pages[detail].isDefault = true;
 					self._pages[detail].element.defaultMark.classList.remove('hidden');
 				},
+				'rightClick-pageDuplicate': ({ detail }) => {
+
+					let newName = '';
+					let newId = '';
+					while(true){
+						newName = `Duplicate Page ${++self._newPageCounter}`;
+						newId = utils.toKebabCase(`tab-page-${newName}`);
+						if(self._pages[newId] === undefined) break;
+					}
+
+					self._pages[newId] = {
+						components: structuredClone(self._pages[detail].components),
+						isDefault: false,
+						name : newName
+					}
+
+					const newItem = self.createItemPage(newName);
+					self._listPages.append(newItem);
+
+				},
 				'drawer-update': ({ detail }) => {
 					const {pageId, components} = detail;
 					const id = `tab-page-${pageId}`

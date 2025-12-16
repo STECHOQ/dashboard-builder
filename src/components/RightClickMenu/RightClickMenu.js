@@ -33,9 +33,11 @@ class RightClickMenu extends HTMLElement {
 			drawerCreateGroup: self.createMenuItem('Create Group'),
 			drawerEdit: self.createMenuItem('Edit'),
 			drawerDelete: self.createMenuItem('Delete'),
+			drawerDuplicate: self.createMenuItem('Duplicate'),
 			pageRename: self.createMenuItem('Rename'),
 			pageDelete: self.createMenuItem('Delete'),
 			pageSetDefault: self.createMenuItem('Set Default'),
+			pageDuplicate: self.createMenuItem('Duplicate'),
 		}
 
 		for(const key in self._rightClickItems){
@@ -60,6 +62,11 @@ class RightClickMenu extends HTMLElement {
 			ui.emit('rightClick-drawerEdit', { id: self._selectedItem.id, drawerId: drawerEl.id });
 		});
 
+		self._rightClickItems.drawerDuplicate.addEventListener('click', () => {
+			const drawerEl = self.findParentDrawerId(self._selectedItem);
+			ui.emit('rightClick-drawerDuplicate', { id: self._selectedItem.id, drawerId: drawerEl.id });
+		});
+
 		self._rightClickItems.pageRename.addEventListener('click', () => {
 			ui.emit('rightClick-pageRename', self._selectedItem.id);
 		});
@@ -68,6 +75,9 @@ class RightClickMenu extends HTMLElement {
 		});
 		self._rightClickItems.pageSetDefault.addEventListener('click', () => {
 			ui.emit('rightClick-pageSetDefault', self._selectedItem.id);
+		});
+		self._rightClickItems.pageDuplicate.addEventListener('click', () => {
+			ui.emit('rightClick-pageDuplicate', self._selectedItem.id);
 		});
 
 		return menu;
@@ -108,6 +118,7 @@ class RightClickMenu extends HTMLElement {
 
 					self._rightClickItems.drawerEdit.classList.remove('hidden');
 					self._rightClickItems.drawerDelete.classList.remove('hidden');
+					self._rightClickItems.drawerDuplicate.classList.remove('hidden');
 					break;
 
 				case 'grid-stack':
@@ -127,6 +138,7 @@ class RightClickMenu extends HTMLElement {
 					self._rightClickItems.pageRename.classList.remove('hidden');
 					self._rightClickItems.pageDelete.classList.remove('hidden');
 					self._rightClickItems.pageSetDefault.classList.remove('hidden');
+					self._rightClickItems.pageDuplicate.classList.remove('hidden');
 					break;
 
 				default:
