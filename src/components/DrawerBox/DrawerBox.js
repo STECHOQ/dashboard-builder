@@ -507,14 +507,14 @@ class ELEMENT extends HTMLElement {
 				self.convertIframeContent(components);
 				const selectedNode = self.findNode(components, selectedId);
 
-				localStorage.setItem('copy', JSON.stringify(selectedNode));
+				localStorage.setItem('copy-component', JSON.stringify(selectedNode));
 
 			},
 			'rightClick-drawerPaste': ({ detail }) => {
 
 				if(self._drawerId != detail) return;
 
-				const rawSelectedNode = localStorage.getItem('copy');
+				const rawSelectedNode = localStorage.getItem('copy-component');
 				if(rawSelectedNode){
 					const selectedNode = JSON.parse(rawSelectedNode);
 					self._grid.addWidget(selectedNode);

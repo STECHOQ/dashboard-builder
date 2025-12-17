@@ -40,6 +40,8 @@ class RightClickMenu extends HTMLElement {
 			pageDelete: self.createMenuItem('Delete'),
 			pageSetDefault: self.createMenuItem('Set Default'),
 			pageDuplicate: self.createMenuItem('Duplicate'),
+			pageCopy: self.createMenuItem('Copy'),
+			pagePaste: self.createMenuItem('Paste'),
 		}
 
 		for(const key in self._rightClickItems){
@@ -89,6 +91,12 @@ class RightClickMenu extends HTMLElement {
 		});
 		self._rightClickItems.pageDuplicate.addEventListener('click', () => {
 			ui.emit('rightClick-pageDuplicate', self._selectedItem.id);
+		});
+		self._rightClickItems.pageCopy.addEventListener('click', () => {
+			ui.emit('rightClick-pageCopy', self._selectedItem.id);
+		});
+		self._rightClickItems.pagePaste.addEventListener('click', () => {
+			ui.emit('rightClick-pagePaste', self._selectedItem.id);
 		});
 
 		return menu;
@@ -152,6 +160,13 @@ class RightClickMenu extends HTMLElement {
 					self._rightClickItems.pageDelete.classList.remove('hidden');
 					self._rightClickItems.pageSetDefault.classList.remove('hidden');
 					self._rightClickItems.pageDuplicate.classList.remove('hidden');
+					self._rightClickItems.pageCopy.classList.remove('hidden');
+					self._rightClickItems.pagePaste.classList.remove('hidden');
+					break;
+
+				case 'tab-actual-content':
+					isFound = true;
+					self._rightClickItems.pagePaste.classList.remove('hidden');
 					break;
 
 				default:

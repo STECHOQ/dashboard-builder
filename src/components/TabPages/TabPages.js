@@ -296,6 +296,38 @@ export default window.customElements.define(
 					self._listPages.append(newItem);
 
 				},
+				'rightClick-pageCopy': ({ detail }) => {
+
+					const copiedPage = {
+						components: structuredClone(self._pages[detail].components),
+						isDefault: false,
+						name : ''
+					}
+
+					localStorage.setItem('copy-page', JSON.stringify(copiedPage));
+
+				},
+				'rightClick-pagePaste': ({ detail }) => {
+
+					let newName = '';
+					let newId = '';
+					while(true){
+						newName = `Copied Page ${++self._newPageCounter}`;
+						newId = utils.toKebabCase(`tab-page-${newName}`);
+						if(self._pages[newId] === undefined) break;
+					}
+
+					const rawCopiedPage = localStorage.getItem('copy-page');
+					if(rawCopiedPage){
+						const copiedPage = JSON.parse(rawCopiedPage);
+						copiedPage.name = newName;
+
+						const newItem = self.createItemPage(newName);
+						self._listPages.append(newItem);
+
+						self._pages[newId] = copiedPage;
+					}
+				},
 				'drawer-update': ({ detail }) => {
 					const {pageId, components} = detail;
 					const id = `tab-page-${pageId}`
