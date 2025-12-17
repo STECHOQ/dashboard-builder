@@ -492,8 +492,33 @@ class ELEMENT extends HTMLElement {
 				self.convertIframeContent(components);
 				const selectedNode = self.findNode(components, selectedId);
 
-				/* need to improve to only update selected */
 				self._grid.addWidget(selectedNode);
+			},
+			'rightClick-drawerCopy': ({ detail }) => {
+
+				const {id, drawerId} = detail;
+
+				if(self._drawerId != drawerId) return;
+
+				const selectedId = id.replace('widget-','');
+				self._selectedItemId = id;
+
+				const components = self._grid.save();
+				self.convertIframeContent(components);
+				const selectedNode = self.findNode(components, selectedId);
+
+				localStorage.setItem('copy', JSON.stringify(selectedNode));
+
+			},
+			'rightClick-drawerPaste': ({ detail }) => {
+
+				if(self._drawerId != detail) return;
+
+				const rawSelectedNode = localStorage.getItem('copy');
+				if(rawSelectedNode){
+					const selectedNode = JSON.parse(rawSelectedNode);
+					self._grid.addWidget(selectedNode);
+				}
 			},
 			'btn-test': () => {
 				alert("TEST")

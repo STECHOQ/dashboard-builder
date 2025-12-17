@@ -102,6 +102,10 @@ class PageHome extends HTMLElement {
 
 		// as refresh confirmation
 		window.addEventListener("beforeunload", function (event) {
+
+			// remove copy cache if user want to close the tab
+			localStorage.removeItem('copy');
+
       		event.preventDefault();
     	});
 

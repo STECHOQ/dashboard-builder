@@ -34,6 +34,8 @@ class RightClickMenu extends HTMLElement {
 			drawerEdit: self.createMenuItem('Edit'),
 			drawerDelete: self.createMenuItem('Delete'),
 			drawerDuplicate: self.createMenuItem('Duplicate'),
+			drawerCopy: self.createMenuItem('Copy'),
+			drawerPaste: self.createMenuItem('Paste'),
 			pageRename: self.createMenuItem('Rename'),
 			pageDelete: self.createMenuItem('Delete'),
 			pageSetDefault: self.createMenuItem('Set Default'),
@@ -65,6 +67,15 @@ class RightClickMenu extends HTMLElement {
 		self._rightClickItems.drawerDuplicate.addEventListener('click', () => {
 			const drawerEl = self.findParentDrawerId(self._selectedItem);
 			ui.emit('rightClick-drawerDuplicate', { id: self._selectedItem.id, drawerId: drawerEl.id });
+		});
+
+		self._rightClickItems.drawerCopy.addEventListener('click', () => {
+			const drawerEl = self.findParentDrawerId(self._selectedItem);
+			ui.emit('rightClick-drawerCopy', { id: self._selectedItem.id, drawerId: drawerEl.id });
+		});
+
+		self._rightClickItems.drawerPaste.addEventListener('click', () => {
+			ui.emit('rightClick-drawerPaste', self._selectedItem.id);
 		});
 
 		self._rightClickItems.pageRename.addEventListener('click', () => {
@@ -119,12 +130,14 @@ class RightClickMenu extends HTMLElement {
 					self._rightClickItems.drawerEdit.classList.remove('hidden');
 					self._rightClickItems.drawerDelete.classList.remove('hidden');
 					self._rightClickItems.drawerDuplicate.classList.remove('hidden');
+					self._rightClickItems.drawerCopy.classList.remove('hidden');
 					break;
 
 				case 'grid-stack':
 					isFound = true;
 					self._rightClickItems.drawerCreateComponent.classList.remove('hidden');
 					self._rightClickItems.drawerCreateGroup.classList.remove('hidden');
+					self._rightClickItems.drawerPaste.classList.remove('hidden');
 					break;
 
 				case 'page-item-content-2':
