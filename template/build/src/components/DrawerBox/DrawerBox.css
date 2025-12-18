@@ -10,9 +10,9 @@ drawer-box .grid-stack {
 	min-height: 100vh;
 }
 
-drawer-box .drawer-wrapper {
+/*drawer-box .drawer-wrapper {
 	height: calc(100% - var(--tab-height) - (var(--size-field) * 10) - (var(--spacing) * 5) );
-}
+}*/
 
 drawer-box .grid-stack-item-content { 
 	border-radius: 5px; 

@@ -45,7 +45,9 @@ class EditorTabs extends HTMLElement {
 		label.append(input, title, btnClose)
 
 		const tabContent = document.createElement('div');
-		tabContent.classList.add('tab-content', 'bg-base-100', 'border-base-300', 'p-1');
+		tabContent.classList.add('tab-content', 'bg-base-100', 'border-base-300', 'relative');
+
+		tabContent.append(self.createNavBar());
 
 		tabContent.append(content);
 		self._tabsContent[tabId] = {
@@ -120,8 +122,67 @@ class EditorTabs extends HTMLElement {
 		return self._tabs;
 	}
 
+	toggleNavbar(){
+		const self = this;
+
+		if(self._isOpen){
+
+			self._tabs.querySelectorAll('.tab').forEach(element => {
+				element.classList.remove('hidden');
+			});
+
+			self.querySelector('.navbar-toggle i').classList.add('fa-chevron-up');
+			self.querySelector('.navbar-toggle i').classList.remove('fa-chevron-down');
+		}else{
+
+			self._tabs.querySelectorAll('.tab').forEach(element => {
+				element.classList.add('hidden');
+			});
+
+			self.querySelector('.navbar-toggle i').classList.remove('fa-chevron-up');
+			self.querySelector('.navbar-toggle i').classList.add('fa-chevron-down');
+		}
+
+		ui.emit('navbar-state', {
+			state: !self._isOpen
+		})
+
+		self._isOpen = !self._isOpen;
+	}
+
+	createNavBar(){
+		const self = this;
+
+		const nav = document.createElement('nav');
+		nav.classList.add('navbar-toggle', 'shadow');
+
+		nav.addEventListener('click', () => {
+			self.toggleNavbar();
+		})
+
+		self._navbarToggle = nav;
+
+		nav.append(self.createCollapseButton());
+
+		return nav;
+	}
+
+	createCollapseButton(){
+		const button = document.createElement('button');
+		button.classList.add('text-muted', 'm-0', 'p-0');
+		button.setAttribute('type', 'button');
+
+		const icon = document.createElement('i');
+		icon.classList.add('fa-solid', 'fa-chevron-up', 'cursor-pointer');
+		button.append(icon);
+
+		return button;
+	}
+
 	connectedCallback(){
 		const self = this;
+
+		self._isOpen = false;
 
 		self.append(self.createTabs());
 		self.classList.add('w-full');

@@ -145,6 +145,14 @@ class ELEMENT extends HTMLElement {
 
 		self._listeners = {
 			'screen-resize': () => {
+			},
+
+			'navbar-state': ({ detail }) => {
+				if(detail.state){
+					self.classList.add('hidden');
+				}else{
+					self.classList.remove('hidden');
+				}
 			}
 		}
 

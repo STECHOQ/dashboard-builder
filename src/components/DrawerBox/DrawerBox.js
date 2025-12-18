@@ -13,7 +13,7 @@ class ELEMENT extends HTMLElement {
 		const randomUUID = window.crypto.randomUUID();
 
 		const wrapper = document.createElement('div');
-		wrapper.classList.add('overflow-auto', 'drawer-wrapper');
+		wrapper.classList.add('overflow-auto', 'drawer-wrapper', 'drawer-dynamic-height');
 
 		const component = document.createElement('div');
 		component.classList.add('grid-stack', 'drawer-main');
@@ -590,6 +590,17 @@ class ELEMENT extends HTMLElement {
 
 				self._grid.addWidget({ ...component, locked: 'yes'});
 			},
+			'navbar-state': ({ detail }) => {
+				const { state } = detail;
+
+				if(state){
+					self.querySelector('.drawer-wrapper').classList.remove('drawer-dynamic-height');
+					self.querySelector('.drawer-wrapper').classList.add('drawer-full-height');
+				}else{
+					self.querySelector('.drawer-wrapper').classList.add('drawer-dynamic-height');
+					self.querySelector('.drawer-wrapper').classList.remove('drawer-full-height');
+				}
+			}
 		}
 
 		for(let key in self._listeners){
