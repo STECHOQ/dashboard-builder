@@ -12,8 +12,12 @@ export default window.customElements.define(
 
 			if(self._isOpen){
 				self.classList.add('hide-close');
+				self.querySelector('.navbar-toggle i').classList.add('fa-chevron-right');
+				self.querySelector('.navbar-toggle i').classList.remove('fa-chevron-left');
 			}else{
 				self.classList.remove('hide-close');
+				self.querySelector('.navbar-toggle i').classList.remove('fa-chevron-right');
+				self.querySelector('.navbar-toggle i').classList.add('fa-chevron-left');
 			}
 
 			ui.emit('sidebar-state', {
@@ -29,7 +33,7 @@ export default window.customElements.define(
 			button.setAttribute('type', 'button');
 
 			const icon = document.createElement('i');
-			icon.classList.add('fa-solid', 'fa-bars', 'cursor-pointer');
+			icon.classList.add('fa-solid', 'fa-chevron-left', 'cursor-pointer');
 			button.append(icon);
 
 			return button;
