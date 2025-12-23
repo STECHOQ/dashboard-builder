@@ -600,6 +600,32 @@ class ELEMENT extends HTMLElement {
 					self.querySelector('.drawer-wrapper').classList.add('drawer-dynamic-height');
 					self.querySelector('.drawer-wrapper').classList.remove('drawer-full-height');
 				}
+			},
+			"preview-mode": ({ detail }) => {
+				const { value } = detail;
+
+				if(value){
+					self.querySelectorAll('.drag-handler').forEach(element => {
+						element.classList.add('hidden');
+					});
+
+					self.querySelectorAll('.grid-stack-item-content').forEach(element => {
+						element.classList.add('preview');
+					});
+
+					self._grid.setStatic(true);
+
+				}else{
+					self.querySelectorAll('.drag-handler').forEach(element => {
+						element.classList.remove('hidden');
+					});
+
+					self.querySelectorAll('.grid-stack-item-content').forEach(element => {
+						element.classList.remove('preview');
+					});
+
+					self._grid.setStatic(false);
+				}
 			}
 		}
 

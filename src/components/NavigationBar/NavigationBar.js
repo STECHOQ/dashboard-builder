@@ -72,6 +72,32 @@ class ELEMENT extends HTMLElement {
 		return dialog;
 	}
 
+	createCheckboxPreview(){
+		const self = this;
+
+		const label = document.createElement('label');
+		label.classList.add('label', 'border-2', 'border-dashed', 'p-2');
+
+		const input = document.createElement('input');
+		input.setAttribute('type', 'checkbox');
+		input.classList.add('checkbox');
+
+		input.addEventListener('change', (event) => {
+			const value = event.currentTarget.checked;
+
+			ui.emit('preview-mode', {
+				value: value
+			})
+		})
+
+		label.append(
+			input,
+			"Preview Mode"
+		);
+
+		return label;
+	}
+
 	createWrapper(){
 		const self = this;
 
@@ -114,6 +140,8 @@ class ELEMENT extends HTMLElement {
 		btnGetRaw.classList.add('btn', 'mr-2');
 		btnGetRaw.innerText = 'Get Raw Folder';
 		wrapper.append(btnGetRaw);
+
+		wrapper.append(self.createCheckboxPreview());
 
 		btnImport.addEventListener('click', () => {
 			dialogImport.showModal();

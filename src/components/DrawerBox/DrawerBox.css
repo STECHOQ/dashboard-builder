@@ -16,6 +16,10 @@ drawer-box .grid-stack-item-content {
 	border-radius: 5px; 
 }
 
+drawer-box .grid-stack-item-content.preview {
+	border: none;
+}
+
 drawer-box .grid-stack-nested {
 	width: 100%;
 	background: transparent;
