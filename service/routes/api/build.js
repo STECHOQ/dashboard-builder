@@ -10,4 +10,12 @@ export default async (fastify, options) => {
 
   		return reply.send(buffer);
 	})
+
+	fastify.get('/', async (request, reply) => {
+		const id = request.session.get('id');
+		return {
+      		message: request.isNew ? "Welcome, newcomer!" : "Welcome back!",
+      		visitorId: id
+    	};
+	})
 }

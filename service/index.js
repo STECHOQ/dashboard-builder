@@ -11,6 +11,23 @@ await fastifyHelper.init({
 		prefix: '/'
 	},
 	routes: join(__basedir, 'routes'),
+	useSession: {
+		keyPath: join(__basedir, 'config/secret-key'),
+		expiry: 24 * 60 * 60
+	},
+
+	preRouteMiddleware: (fastify) => {
+
+		fastify.addHook('preHandler', async (request, reply) => {
+  			if (!request.session.get('id')) {
+    			request.session.set('id', crypto.randomUUID());
+    			request.isNew = true;
+  			} else {
+    			request.isNew = false;
+  			}
+		});
+	},
+
 	postRouteMiddleware: (fastify) => {
 
 		fastify.setNotFoundHandler((req, reply) => {

@@ -1,20 +1,44 @@
 import Fastify from 'fastify';
 import fastifyStatic from "@fastify/static";
+import secureSession from '@fastify/secure-session';
 import fs from "fs";
 import path from 'path';
 import { join } from 'node:path';
+import { randomBytes } from 'crypto';
 
 class FASTIFY {
 
 	async init(config){
 		const self = this;
 
-		const { port, host, staticConfig, logger, routes } = config;
+		const { port, host, staticConfig, logger, routes, useSession } = config;
 		const { preRouteMiddleware, postRouteMiddleware } = config;
 
 		const fastify = Fastify({
   			logger: logger ?? true
 		})
+
+		if(useSession){
+			const { keyPath, expiry } = useSession;
+
+			if (!fs.existsSync(keyPath)) {
+  				const newKey = randomBytes(32); 
+  				fs.writeFileSync(keyPath, newKey);
+			}
+
+			const sessionKey = fs.readFileSync(keyPath);
+
+			fastify.register(secureSession, {
+  				key: sessionKey,
+  				cookie: { 
+  					path: '/', 
+  					httpOnly: true,
+  					secure: process.env.NODE_ENV === 'production',
+  					expiry,
+  				}
+			});
+
+		}
 
 		if(preRouteMiddleware){
 			await preRouteMiddleware(fastify);
