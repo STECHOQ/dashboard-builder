@@ -1,6 +1,7 @@
 import Fastify from 'fastify';
 import fastifyStatic from "@fastify/static";
 import secureSession from '@fastify/secure-session';
+import fastifyCookie from '@fastify/cookie';
 import fs from "fs";
 import path from 'path';
 import { join } from 'node:path';
@@ -11,15 +12,15 @@ class FASTIFY {
 	async init(config){
 		const self = this;
 
-		const { port, host, staticConfig, logger, routes, useSession } = config;
+		const { port, host, staticConfig, logger, routes, useStatelessSession, useStatefulSession } = config;
 		const { preRouteMiddleware, postRouteMiddleware } = config;
 
 		const fastify = Fastify({
   			logger: logger ?? true
 		})
 
-		if(useSession){
-			const { keyPath, expiry } = useSession;
+		if(useStatelessSession){
+			const { keyPath, expiry, cookie } = useStatelessSession;
 
 			if (!fs.existsSync(keyPath)) {
   				const newKey = randomBytes(32); 
@@ -30,14 +31,18 @@ class FASTIFY {
 
 			fastify.register(secureSession, {
   				key: sessionKey,
+				expiry,
   				cookie: { 
   					path: '/', 
   					httpOnly: true,
   					secure: process.env.NODE_ENV === 'production',
-  					expiry,
+  					...cookie
   				}
 			});
+		}
 
+		if(useStatefulSession){
+			fastify.register(fastifyCookie);
 		}
 
 		if(preRouteMiddleware){

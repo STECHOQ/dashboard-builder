@@ -21,7 +21,7 @@ class build{
 
 		// make tmp dir 
 		const rootPath = join(__basedir, '..');
-		const sessionPath = join(rootPath, 'tmp', uuid);
+		const sessionPath = join(rootPath, 'tmp/build_result', uuid);
 		await mkdir(sessionPath, { recursive: true });
 
 		const needToCopy = [

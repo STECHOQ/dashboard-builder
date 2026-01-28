@@ -3,6 +3,23 @@ global.__basedir = import.meta.dirname;
 import fs from "fs";
 import { join } from 'node:path';
 
+// ===================== DATABASE =============================
+const { default: dbHelper } = await import(join(__basedir, '/helper/sqlite.helper.js'));
+
+await dbHelper.init({
+	dbPath: join(__basedir, 'config', 'data.db'),
+})
+
+// ==================== SESSION ===============================
+const { default: sessionLib } = await import(join(__basedir, '/lib/session.js'));
+
+const SESSION_EXPIRY = 60 * 60 * 24 * 7;	// in seconds
+
+await sessionLib.init({
+	expiry: SESSION_EXPIRY
+});
+
+// ===================== FASTIFY ===============================
 const { default: fastifyHelper } = await import(join(__basedir, '/helper/fastify.helper.js'));
 
 await fastifyHelper.init({
@@ -11,20 +28,12 @@ await fastifyHelper.init({
 		prefix: '/'
 	},
 	routes: join(__basedir, 'routes'),
-	useSession: {
-		keyPath: join(__basedir, 'config/secret-key'),
-		expiry: 24 * 60 * 60
-	},
+	useStatefulSession: true,
 
-	preRouteMiddleware: (fastify) => {
+	preRouteMiddleware: async (fastify) => {
 
 		fastify.addHook('preHandler', async (request, reply) => {
-  			if (!request.session.get('id')) {
-    			request.session.set('id', crypto.randomUUID());
-    			request.isNew = true;
-  			} else {
-    			request.isNew = false;
-  			}
+			await sessionLib.check(request, reply);
 		});
 	},
 

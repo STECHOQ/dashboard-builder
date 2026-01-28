@@ -12,10 +12,8 @@ export default async (fastify, options) => {
 	})
 
 	fastify.get('/', async (request, reply) => {
-		const id = request.session.get('id');
 		return {
-      		message: request.isNew ? "Welcome, newcomer!" : "Welcome back!",
-      		visitorId: id
+			status: true
     	};
 	})
 }
